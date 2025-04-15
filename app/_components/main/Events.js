@@ -1,0 +1,68 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import EventCard from "./EventCard";
+
+export default function Events({ events }) {
+  const [initialDisplayCount, setInitialDisplayCount] = useState(4);
+  const [displayCount, setDisplayCount] = useState(initialDisplayCount);
+
+  const displayedEvents = events.slice(0, displayCount);
+  const hasMoreEvents = displayedEvents.length < events.length;
+
+  useEffect(() => {
+    function updateDisplayCount() {
+      const displayCount =
+        window.innerWidth >= 1280 ? 8 : window.innerWidth >= 1024 ? 6 : 4;
+
+      setInitialDisplayCount(displayCount);
+      setDisplayCount(displayCount);
+    }
+
+    updateDisplayCount();
+    window.addEventListener("resize", updateDisplayCount);
+
+    return () => window.removeEventListener("resize", updateDisplayCount);
+  }, []);
+
+  function loadMoreEvents() {
+    setDisplayCount((previousCount) => previousCount + 4);
+  }
+
+  const variants = {
+    hidden: { opacity: 0, filter: "blur(8px)" },
+    visible: { opacity: 1, filter: "blur(0px)" },
+  };
+
+  return (
+    <section>
+      <h2 className="mb-4 text-2xl font-bold">Events</h2>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {displayedEvents.map((event, index) => (
+          <motion.div
+            key={event.slug}
+            initial="hidden"
+            animate="visible"
+            variants={variants}
+            transition={{ delay: (index % initialDisplayCount) * 0.2 }}
+          >
+            <EventCard event={event} />
+          </motion.div>
+        ))}
+      </div>
+
+      {hasMoreEvents && (
+        <div className="mt-4 flex justify-center">
+          <button
+            onClick={loadMoreEvents}
+            className="rounded-md bg-muted px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+          >
+            More Events
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
