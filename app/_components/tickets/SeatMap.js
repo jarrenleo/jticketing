@@ -73,7 +73,7 @@ export default function SeatMap({ event }) {
   if (!event) return null;
 
   return (
-    <section className="mb-8 rounded-md">
+    <section className="col-span-2 mb-8 rounded-md">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold">Seat Map</h2>
         <div className="flex items-center space-x-0.5">

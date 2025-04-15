@@ -33,8 +33,8 @@ export default function TicketListItem({ ticket, onAddToCart }) {
         </div>
 
         <Button className="w-full" onClick={onAddToCart}>
-          <ShoppingCart height={20} width={20} />
-          Add To Cart
+          <ShoppingCart height={14} width={14} />
+          <span className="text-sm">Add To Cart</span>
         </Button>
       </div>
     </div>

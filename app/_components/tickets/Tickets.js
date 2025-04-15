@@ -27,7 +27,7 @@ export default function Tickets({ ticketsData, eventData }) {
     <main className="container mx-auto flex px-4 py-8">
       {viewportWidth < 1024 ? (
         <Tabs defaultValue="ticket_listing" className="w-full">
-          <TabsList className="mb-4 w-full">
+          <TabsList className="mb-2 w-full">
             <TabsTrigger value="ticket_listing" className="w-full">
               Ticket Listing
             </TabsTrigger>
@@ -43,7 +43,7 @@ export default function Tickets({ ticketsData, eventData }) {
           </TabsContent>
         </Tabs>
       ) : (
-        <div className="flex flex-1 gap-4">
+        <div className="grid w-full grid-cols-5 gap-8">
           <TicketList tickets={ticketsData} />
           <SeatMap event={eventData} />
         </div>

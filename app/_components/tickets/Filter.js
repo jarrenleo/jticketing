@@ -41,8 +41,8 @@ export default function TicketFilters({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="flex items-center gap-2 rounded-md bg-muted px-4 py-2 font-medium hover:bg-accent hover:transition-colors">
-          <SlidersHorizontal width={16} height={16} />
+        <button className="flex items-center gap-1 rounded-md bg-muted px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
+          <SlidersHorizontal width={14} height={14} />
           <span>Filters</span>
         </button>
       </SheetTrigger>
