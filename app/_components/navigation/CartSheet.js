@@ -226,8 +226,7 @@ export default function CartSheet() {
             </SheetFooter>
 
             <div className="px-4 text-center text-sm text-muted-foreground">
-              By checking out, I agree to be bound by the
-              <br />
+              By checking out, I agree to be bound by the{" "}
               <SheetClose asChild>
                 <Link href="/terms" className="underline">
                   Terms & Conditions

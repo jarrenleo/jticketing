@@ -1,12 +1,13 @@
 import Tickets from "@/app/_components/tickets/Tickets";
 import Footer from "@/app/_components/footer/Footer";
-import Navigation from "@/app/_components/navigation/Navigation"; // Make sure this is imported!
+import Navigation from "@/app/_components/navigation/Navigation";
 import { getEvent, getEventTickets } from "@/app/_lib/dataService";
 
 export const metadata = {
   title: "JTicketing | Tickets",
   description:
     "Jticketing is a platform for securing the hottest concert tickets with ease and confidence. ",
+  image: "./icon.png",
 };
 
 export default async function TicketPage({ params }) {

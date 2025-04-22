@@ -24,8 +24,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
     const results = events.filter(
       (event) =>
         event.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        event.venue.toLowerCase().includes(searchTerm.toLowerCase()),
+        event.title.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     setSearchResults(results);
@@ -47,7 +46,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
             />
             <Input
               type="search"
-              placeholder="Search events, artists, venues"
+              placeholder="Search artists or events"
               className="pl-8 pr-2"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

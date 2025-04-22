@@ -11,7 +11,8 @@ const geistSans = Geist({
 export const metadata = {
   title: "JTicketing",
   description:
-    "Jticketing is a platform for securing the hottest concert tickets with ease and confidence. ",
+    "Jticketing is a platform for securing the hottest concert tickets with ease and confidence.",
+  image: "./icon.png",
 };
 
 export default function RootLayout({ children }) {
