@@ -7,8 +7,8 @@ import XiaoHongShu from "../icons/XiaoHongShu";
 
 export default function Footer() {
   return (
-    <footer className="container mx-auto px-4 py-8">
-      <div className="flex flex-col justify-between md:flex-row">
+    <footer className="border-t border-border px-4 py-8">
+      <div className="container mx-auto flex flex-col justify-between md:flex-row">
         <div className="mb-8 md:mb-0">
           <div className="span mb-4 flex items-end justify-between md:justify-normal md:gap-2">
             <div className="flex items-center gap-2">
@@ -18,14 +18,14 @@ export default function Footer() {
                 width={24}
                 height={24}
               />
-              <span className="font-medium">JTicketing</span>
+              <span className="font-bold">JTicketing</span>
             </div>
             <span className="text-sm text-muted-foreground">
               &copy; {new Date().getFullYear()} JTicketing
             </span>
           </div>
 
-          <span className="text-sm">
+          <span className="text-sm text-muted-foreground">
             Secure the hottest tickets with ease and confidence.
           </span>
         </div>
@@ -85,10 +85,7 @@ export default function Footer() {
             >
               About Us
             </Link>
-            <Link
-              href="/about-us#faq"
-              className="transition-colors hover:text-primary"
-            >
+            <Link href="/faq" className="transition-colors hover:text-primary">
               FAQ
             </Link>
             <Link

@@ -1,12 +1,12 @@
 import Navigation from "./_components/navigation/Navigation";
-import MainContent from "./_components/main/MainContent";
+import Main from "./_components/home/Home";
 import Footer from "./_components/footer/Footer";
 
-export default async function Home() {
+export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navigation />
-      <MainContent />
+      <Main />
       <Footer />
     </div>
   );

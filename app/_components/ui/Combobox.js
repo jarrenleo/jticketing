@@ -26,7 +26,7 @@ export function Combobox({ value, setValue, field, fieldData }) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={`justify-between px-3 font-normal hover:bg-transparent ${
+          className={`w-full justify-between font-normal hover:bg-transparent ${
             value
               ? "text-foreground"
               : "text-muted-foreground hover:text-muted-foreground"

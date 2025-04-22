@@ -4,19 +4,14 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext(undefined);
 
-export function CartProvider({ children }) {
+export default function CartProvider({ children }) {
   const [items, setItems] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Load cart from localStorage on initial render
   useEffect(() => {
     const savedCart = localStorage.getItem("ticketCart");
-    if (savedCart) {
-      try {
-        setItems(JSON.parse(savedCart));
-      } catch (e) {
-        console.error("Failed to parse cart from localStorage", e);
-      }
-    }
+    if (savedCart) setItems(JSON.parse(savedCart));
   }, []);
 
   // Save cart to localStorage whenever it changes
@@ -24,68 +19,72 @@ export function CartProvider({ children }) {
     localStorage.setItem("ticketCart", JSON.stringify(items));
   }, [items]);
 
-  const addItem = (item) => {
-    // Check if item already exists in cart
+  function addItem(item) {
     const existingItemIndex = items.findIndex(
       (cartItem) =>
         cartItem.event === item.event &&
         cartItem.section === item.section &&
         cartItem.row === item.row &&
-        cartItem.date === item.date
+        cartItem.datetime === item.datetime,
     );
 
-    if (existingItemIndex >= 0) {
-      // Update quantity if item exists
-      const updatedItems = [...items];
-      const currentQuantity = updatedItems[existingItemIndex].quantity;
-      const newQuantity = Math.min(
-        currentQuantity + item.quantity,
-        item.maxQuantity
-      );
-
-      updatedItems[existingItemIndex] = {
-        ...updatedItems[existingItemIndex],
-        quantity: newQuantity,
-      };
-
-      setItems(updatedItems);
-    } else {
-      // Add new item
-      setItems((prev) => [...prev, item]);
+    if (existingItemIndex === -1) {
+      setItems((items) => [...items, item]);
+      return;
     }
-  };
 
-  const removeItem = (id) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
+    const updatedItems = [...items];
+    const currentItemQuantity = updatedItems[existingItemIndex].cartQuantity;
+    const newItemQuantity = Math.min(currentItemQuantity + 1, item.num_sets);
 
-  const updateQuantity = (id, quantity) => {
-    setItems((prev) =>
-      prev.map((item) =>
+    updatedItems[existingItemIndex] = {
+      ...updatedItems[existingItemIndex],
+      cartQuantity: newItemQuantity,
+    };
+
+    setItems(updatedItems);
+  }
+
+  function removeItem(id) {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
+  function updateQuantity(id, quantity) {
+    setItems((items) =>
+      items.map((item) =>
         item.id === id
-          ? { ...item, quantity: Math.min(quantity, item.maxQuantity) }
-          : item
-      )
+          ? { ...item, cartQuantity: Math.min(quantity, item.num_sets) }
+          : item,
+      ),
     );
-  };
+  }
 
-  const clearCart = () => {
+  function clearCart() {
     setItems([]);
-  };
+  }
 
-  const getTotalPrice = () => {
+  function getTotalPrice() {
     return items.reduce(
-      (total, item) => total + item.price * item.quantity * item.ticketsPerItem,
-      0
+      (total, item) => total + item.price * item.quantity * item.cartQuantity,
+      0,
     );
-  };
+  }
 
-  const getTotalItems = () => {
-    return items.reduce(
-      (total, item) => total + item.quantity * item.ticketsPerItem,
-      0
-    );
-  };
+  function getTotalItems() {
+    return items.length;
+  }
+
+  function openCart() {
+    setIsCartOpen(true);
+  }
+
+  function closeCart() {
+    setIsCartOpen(false);
+  }
+
+  function toggleCart() {
+    setIsCartOpen((isCartOpen) => !isCartOpen);
+  }
 
   return (
     <CartContext.Provider
@@ -97,6 +96,10 @@ export function CartProvider({ children }) {
         clearCart,
         getTotalPrice,
         getTotalItems,
+        isCartOpen,
+        openCart,
+        closeCart,
+        toggleCart,
       }}
     >
       {children}
@@ -106,8 +109,8 @@ export function CartProvider({ children }) {
 
 export function useCart() {
   const context = useContext(CartContext);
-  if (context === undefined) {
+  if (context === undefined)
     throw new Error("useCart must be used within a CartProvider");
-  }
+
   return context;
 }

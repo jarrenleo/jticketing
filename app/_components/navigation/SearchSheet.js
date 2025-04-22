@@ -12,6 +12,7 @@ import {
 } from "../ui/Sheet";
 import { Input } from "../ui/Input";
 import { Search } from "lucide-react";
+import { retrieveImageUrl } from "@/app/_lib/utils";
 
 export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -70,17 +71,20 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                           >
                             <div className="relative h-12 w-[91px] flex-shrink-0 overflow-hidden rounded-md">
                               <Image
-                                src={event.image_url}
+                                src={retrieveImageUrl(
+                                  "events",
+                                  event.image_file,
+                                )}
                                 alt={event.artist}
                                 fill
                                 className="object-cover"
                               />
                             </div>
                             <div className="flex flex-col gap-0.5">
-                              <span className="line-clamp-1 text-sm font-medium">
+                              <span className="line-clamp-1 text-sm font-semibold">
                                 {event.artist}
                               </span>
-                              <span className="line-clamp-1 text-sm">
+                              <span className="line-clamp-1 text-sm text-muted-foreground">
                                 {event.title}
                               </span>
                             </div>

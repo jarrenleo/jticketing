@@ -1,30 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { useCart } from "../../_contexts/CartContext";
 import CartSheet from "./CartSheet";
 import { ShoppingCart } from "lucide-react";
 
 export default function CartButton() {
-  const { items, removeItem, updateQuantity, getTotalPrice, getTotalItems } =
-    useCart();
-  const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const handleCheckout = () => {
-    // Here we would integrate with Stripe
-    // In a real implementation, we would redirect to Stripe checkout
-    // window.location.href = '/api/checkout/stripe'
-  };
+  const { getTotalItems, toggleCart } = useCart();
 
   return (
     <>
       <button
-        onClick={() => setIsCartOpen(!isCartOpen)}
-        className="rounded-md p-1.5 transition-colors hover:bg-accent"
+        onClick={toggleCart}
+        className="relative rounded-md p-1.5 transition-colors hover:bg-accent"
       >
         <ShoppingCart width={20} height={20} />
+        {getTotalItems() > 0 && (
+          <div className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+            {getTotalItems()}
+          </div>
+        )}
       </button>
-      <CartSheet isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartSheet />
     </>
   );
 }

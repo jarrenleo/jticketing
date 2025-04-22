@@ -19,40 +19,43 @@ import { Button } from "../ui/Button";
 import { getUniqueData, formatDateTime } from "@/app/_lib/utils";
 import { SlidersHorizontal } from "lucide-react";
 
-export default function TicketFilters({
+export default function FilterSheet({
   selectedDateTime,
   setSelectedDateTime,
   selectedQuantity,
   setSelectedQuantity,
+  selectedCategory,
+  setSelectedCategory,
   selectedSection,
   setSelectedSection,
   tickets,
 }) {
   const availableDateTimes = getUniqueData(tickets, "datetime");
   const availableQuantities = getUniqueData(tickets, "quantity");
+  const availableCategories = getUniqueData(tickets, "category");
   const availableSections = getUniqueData(tickets, "section");
 
   function clearFilters() {
     setSelectedDateTime("");
     setSelectedQuantity("");
+    setSelectedCategory("");
     setSelectedSection("");
   }
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="flex items-center gap-1 rounded-md bg-muted px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
+        <button className="flex items-center gap-1 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
           <SlidersHorizontal width={14} height={14} />
           <span>Filters</span>
         </button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-        <SheetHeader className="mb-4">
+      <SheetContent side="left" className="flex flex-col px-0">
+        <SheetHeader className="border-b border-border px-4 pb-4">
           <SheetTitle>Filters</SheetTitle>
         </SheetHeader>
-        <div className="flex h-full flex-col justify-between">
+        <div className="flex flex-1 flex-col justify-between px-4">
           <div className="space-y-4">
-            {/* Date Filter */}
             <div>
               <label className="mb-2 block text-sm font-medium">
                 Date & Time
@@ -74,7 +77,6 @@ export default function TicketFilters({
               </Select>
             </div>
 
-            {/* Quantity Filter */}
             <div>
               <label className="mb-2 block text-sm font-medium">Quantity</label>
               <Select
@@ -94,18 +96,38 @@ export default function TicketFilters({
               </Select>
             </div>
 
-            {/* Section Filter */}
-            <Combobox
-              value={selectedSection}
-              setValue={setSelectedSection}
-              field={"Section"}
-              fieldData={availableSections}
-            />
+            <div>
+              <label className="mb-2 block text-sm font-medium">Category</label>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableCategories.map((category) => (
+                    <SelectItem key={category} value={category.toString()}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Combobox
+                value={selectedSection}
+                setValue={setSelectedSection}
+                field={"Section"}
+                fieldData={availableSections}
+              />
+            </div>
           </div>
 
           <Button
             variant="outline"
-            className="mt-auto w-full"
+            className="w-full text-base"
             onClick={clearFilters}
           >
             Clear All Filters

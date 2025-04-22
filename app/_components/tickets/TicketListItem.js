@@ -2,41 +2,39 @@
 
 import { Button } from "../ui/Button";
 import { formatDateTime } from "../../_lib/utils";
-import { ShoppingCart } from "lucide-react";
 
 export default function TicketListItem({ ticket, onAddToCart }) {
-  const { section, row, price, quantity, listing_count, datetime } = ticket;
+  const { category, section, row, price, quantity, num_sets, datetime } =
+    ticket;
 
   return (
-    <div className="rounded-md bg-muted">
-      <div className="space-y-4 p-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="text-lg font-bold">Section {section}</h3>
-            <p className="text-sm text-muted-foreground">Row {row}</p>
-            {listing_count > 1 && (
-              <p className="mt-1 text-xs text-primary">
-                {listing_count} listings available
-              </p>
-            )}
-          </div>
-          <div className="text-right">
-            <div className="text-lg font-bold">${price.toFixed(2)} each</div>
-            <p className="text-sm text-muted-foreground">
-              {quantity} ticket{quantity > 1 ? "s" : ""}
-            </p>
-          </div>
-        </div>
-
-        <div className="text-sm text-muted-foreground">
-          {formatDateTime(datetime)}
-        </div>
-
-        <Button className="w-full" onClick={onAddToCart}>
-          <ShoppingCart height={14} width={14} />
-          <span className="text-sm">Add To Cart</span>
-        </Button>
+    <div className="flex flex-col rounded-md border border-border p-4">
+      <div className="flex items-center justify-between text-lg font-bold">
+        <span className="line-clamp-1">{category}</span>
+        <span>RM {price}</span>
       </div>
+
+      <div className="mb-2 flex items-center justify-between text-sm text-muted-foreground">
+        <span className="line-clamp-1">
+          Section {section}, Row {row}
+        </span>
+        <span>per ticket</span>
+      </div>
+
+      <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+        <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">
+          Set of {quantity}
+        </span>
+        <span className="text-sm text-primary">{num_sets} sets available</span>
+      </div>
+
+      <span className="mb-4 text-sm text-muted-foreground">
+        {formatDateTime(datetime)}
+      </span>
+
+      <Button className="w-full" onClick={() => onAddToCart(ticket)}>
+        <span className="text-sm">Add to Cart</span>
+      </Button>
     </div>
   );
 }

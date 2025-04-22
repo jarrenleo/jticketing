@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
+import { retrieveImageUrl } from "@/app/_lib/utils";
 
 export default function SeatMap({ event }) {
   const [scale, setScale] = useState(1);
@@ -119,8 +120,8 @@ export default function SeatMap({ event }) {
           }}
         >
           <Image
-            src={event.seatmap_url}
-            alt={`${event.title} Seating Map`}
+            src={retrieveImageUrl("seatmaps", event.seatmap_file)}
+            alt={`${event.title} Seat Map`}
             fill
             className="object-contain"
           />

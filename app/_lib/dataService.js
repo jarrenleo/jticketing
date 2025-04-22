@@ -20,9 +20,7 @@ export async function getEvent(slug) {
 
   if (error) {
     console.error(`Error fetching event for slug "${slug}":`, error);
-    // Consider more robust error handling, maybe re-throwing the error
-    // or returning an object indicating an error state
-    return null; // Return null on error for now
+    return null;
   }
 
   if (!data) return null;
@@ -37,10 +35,27 @@ export async function getEventTickets(slug) {
 
   if (error) {
     console.error(`Error fetching tickets for slug "${slug}":`, error);
-    // Consider more robust error handling, maybe re-throwing the error
-    // or returning an object indicating an error state
-    return []; // Return empty array on error for now
+    return [];
   }
 
   return data;
+}
+
+export async function checkTicketAvailability(id, num_sets) {
+  const { data, error } = await supabase.rpc("check_ticket_availability", {
+    p_id: id,
+    p_num_sets: num_sets,
+  });
+
+  if (error) {
+    console.error(
+      `Error checking tickets availability for ticket ID ${id}:`,
+      error,
+    );
+    return null;
+  }
+
+  if (!data) return null;
+
+  return data[0];
 }

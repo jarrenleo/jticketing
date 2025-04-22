@@ -27,25 +27,23 @@ export default function Events({ events }) {
   }, []);
 
   function loadMoreEvents() {
-    setDisplayCount((previousCount) => previousCount + 4);
+    setDisplayCount((previousCount) => previousCount + initialDisplayCount);
   }
-
-  const variants = {
-    hidden: { opacity: 0, filter: "blur(8px)" },
-    visible: { opacity: 1, filter: "blur(0px)" },
-  };
 
   return (
     <section>
       <h2 className="mb-4 text-2xl font-bold">Events</h2>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {displayedEvents.map((event, index) => (
           <motion.div
             key={event.slug}
             initial="hidden"
             animate="visible"
-            variants={variants}
+            variants={{
+              hidden: { opacity: 0, filter: "blur-sm" },
+              visible: { opacity: 1, filter: "blur-none" },
+            }}
             transition={{ delay: (index % initialDisplayCount) * 0.2 }}
           >
             <EventCard event={event} />
@@ -54,12 +52,12 @@ export default function Events({ events }) {
       </div>
 
       {hasMoreEvents && (
-        <div className="mt-4 flex justify-center">
+        <div className="flex justify-center">
           <button
             onClick={loadMoreEvents}
-            className="rounded-md bg-muted px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+            className="mx-2 rounded-md border border-border px-4 py-2 text-sm font-medium transition hover:bg-accent"
           >
-            More Events
+            Show More
           </button>
         </div>
       )}

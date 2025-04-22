@@ -9,7 +9,12 @@ export function getUniqueData(tickets, key) {
   const uniqueValues = new Set();
   tickets.forEach((ticket) => uniqueValues.add(ticket[key]));
 
-  return Array.from(uniqueValues).sort((a, b) => a - b);
+  return Array.from(uniqueValues).sort((a, b) => {
+    if (typeof a === "string" && typeof b === "string")
+      return a.localeCompare(b, undefined, { numeric: true });
+
+    return a - b;
+  });
 }
 
 export function formatDateTime(datetime) {
@@ -21,4 +26,8 @@ export function formatDateTime(datetime) {
     minute: "2-digit",
     hour12: true,
   });
+}
+
+export function retrieveImageUrl(bucketName, imageName) {
+  return `https://zaonfxpskbeyoutahieb.supabase.co/storage/v1/object/public/${bucketName}//${imageName}`;
 }

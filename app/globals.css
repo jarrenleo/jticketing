@@ -88,51 +88,58 @@
 
 @layer components {
   .loader {
-    --uib-size: 100px;
-    --uib-color: white;
-    --uib-speed: 1.4s;
-    --uib-stroke: 6px;
-    --uib-bg-opacity: 0.1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--uib-stroke);
-    width: var(--uib-size);
-    border-radius: calc(var(--uib-stroke) / 2);
-    overflow: hidden;
-    transform: translate3d(0, 0, 0);
+    --uib-speed: 2.5s;
+    --uib-bg-opacity: 0;
+    transform-origin: center;
+    animation: rotate var(--uib-speed) linear infinite;
+    will-change: transform;
+    overflow: visible;
   }
 
-  .loader::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: var(--uib-color);
+  .car {
+    fill: none;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: stretch calc(var(--uib-speed) * 0.75) ease-in-out infinite;
+    will-change: stroke-dasharray, stroke-dashoffset;
+    transition: stroke 0.5s ease;
+  }
+
+  .track {
+    fill: none;
     opacity: var(--uib-bg-opacity);
-    transition: background-color 0.3s ease;
+    transition: stroke 0.5s ease;
   }
 
-  .loader::after {
-    content: "";
-    height: 100%;
-    width: 100%;
-    border-radius: calc(var(--uib-stroke) / 2);
-    animation: zoom var(--uib-speed) ease-in-out infinite;
-    transform: translateX(-100%);
-    background-color: var(--uib-color);
-    transition: background-color 0.3s ease;
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
-  @keyframes zoom {
+  @keyframes stretch {
     0% {
-      transform: translateX(-100%);
+      stroke-dasharray: 0, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 75, 150;
+      stroke-dashoffset: -25;
     }
     100% {
-      transform: translateX(100%);
+      stroke-dashoffset: -100;
     }
+  }
+
+  /* Custom CSS for blurred gradient overlay in Carousel */
+  .blurred-gradient-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit; /* Inherit border-radius from parent */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    filter: blur(4px); /* Adjust blur amount as needed */
+    z-index: -1; /* Place behind the content */
   }
 }

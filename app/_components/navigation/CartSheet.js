@@ -1,6 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { useCart } from "../../_contexts/CartContext";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   Sheet,
   SheetContent,
@@ -9,122 +13,253 @@ import {
   SheetFooter,
   SheetClose,
 } from "../ui/Sheet";
-import { ChevronRight, Plus, Minus } from "lucide-react";
+import Loader from "../ui/Loader";
+import { checkTicketAvailability } from "../../_lib/dataService";
+import { retrieveImageUrl, formatDateTime } from "../../_lib/utils";
+import { Plus, Minus, Trash2 } from "lucide-react";
 
-export default function CartSheet({ isOpen, onClose }) {
-  const { items, removeItem, updateQuantity, getTotalPrice, getTotalItems } =
-    useCart();
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+);
 
-  const handleCheckout = () => {
-    // Here we would integrate with Stripe
-    // In a real implementation, we would redirect to Stripe checkout
-    // window.location.href = '/api/checkout/stripe'
-    onClose();
-  };
+export default function CartSheet() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const {
+    items,
+    removeItem,
+    updateQuantity,
+    getTotalItems,
+    isCartOpen,
+    closeCart,
+  } = useCart();
+
+  async function checkTicketsAvailability() {
+    for (const item of items) {
+      const { tickets_available } = await checkTicketAvailability(
+        item.id,
+        item.cartQuantity,
+      );
+      if (!tickets_available) return false;
+    }
+    return true;
+  }
+
+  async function handleCheckout() {
+    setIsLoading(true);
+
+    try {
+      const isAvailable = await checkTicketsAvailability();
+
+      if (!isAvailable)
+        throw new Error(
+          "Certain items in cart are unavailable. Please remove them and try again.",
+        );
+
+      const stripe = await stripePromise;
+      if (!stripe)
+        throw new Error(
+          "Stripe payment could not be loaded. Please try again later.",
+        );
+
+      const lineItems = items.map((item) => {
+        return {
+          ...item,
+          priceId: item.stripe_price_id,
+          quantity: item.quantity * item.cartQuantity,
+        };
+      });
+
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ lineItems }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+
+      const { sessionId } = await response.json();
+
+      if (!sessionId)
+        throw new Error(
+          "Failed to retrieve payment session ID. Please try again later.",
+        );
+
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: sessionId,
+      });
+
+      if (error)
+        throw new Error(
+          "Failed to redirect to Stripe payment. Please try again later.",
+        );
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred.",
+      );
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Sheet
-      open={isOpen}
+      open={isCartOpen}
       onOpenChange={(open) => {
-        if (!open) onClose();
+        if (!open) closeCart();
       }}
     >
-      <SheetContent className="flex flex-col overflow-y-auto">
-        <SheetHeader className="border-b border-border pb-4">
-          <SheetTitle>My Cart ({getTotalItems()})</SheetTitle>
+      <SheetContent className="flex flex-col overflow-y-auto px-0">
+        <SheetHeader className="border-b border-border px-4 pb-4">
+          <SheetTitle className="flex flex-col">
+            <span>My Cart</span>
+            <span className="text-sm font-normal text-muted-foreground">
+              {getTotalItems()} item{getTotalItems() === 1 ? "" : "s"}
+            </span>
+          </SheetTitle>
         </SheetHeader>
 
         {items.length > 0 ? (
           <>
-            <div className="flex-1 overflow-y-auto py-4">
+            <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-4">
               {items.map((item) => (
-                <div key={item.id} className="border-b py-4">
-                  <div className="mb-1 flex justify-between">
-                    <div className="font-medium">{item.event}</div>
-                    <div className="font-medium">${item.price.toFixed(2)}</div>
+                <div key={item.id} className="flex flex-col gap-0.5">
+                  <div className="mb-2 flex items-center gap-4">
+                    <div className="relative h-12 w-[91px] flex-shrink-0 overflow-hidden rounded-md">
+                      <Image
+                        src={retrieveImageUrl("events", item.image_file)}
+                        alt={item.artist}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-0.5">
+                      <span className="line-clamp-1 text-sm font-semibold">
+                        {item.artist}
+                      </span>
+                      <span className="line-clamp-1 text-sm text-muted-foreground">
+                        {item.title}
+                      </span>
+                    </div>
                   </div>
-                  <div className="mb-1 text-sm text-gray-500">
-                    Section {item.section}, Row {item.row}
+                  <div className="flex justify-between font-medium">
+                    <span className="line-clamp-1">{item.category}</span>
+                    <span>RM {item.price * item.quantity}</span>
                   </div>
-                  <div className="mb-3 text-sm text-gray-500">{item.date}</div>
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <span>
+                      Section {item.section}, Row {item.row}
+                    </span>
+                    <span>
+                      {item.quantity > 1
+                        ? `Set of ${item.quantity} tickets`
+                        : "Single Ticket"}
+                    </span>
+                  </div>
+
+                  <div className="mb-4 text-sm text-muted-foreground">
+                    {formatDateTime(item.datetime)}
+                  </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
+                    <div className="flex items-center rounded-md bg-muted">
                       <button
-                        onClick={() =>
-                          item.quantity > 1 &&
-                          updateQuantity(item.id, item.quantity - 1)
-                        }
-                        className={`rounded-full border p-1 ${
-                          item.quantity > 1
-                            ? "text-gray-600 hover:bg-gray-100"
-                            : "cursor-not-allowed text-gray-300"
-                        }`}
-                        disabled={item.quantity <= 1}
+                        onClick={() => {
+                          if (item.cartQuantity > 1) {
+                            updateQuantity(item.id, item.cartQuantity - 1);
+                            return;
+                          }
+
+                          removeItem(item.id);
+                        }}
+                        className="rounded-l-md p-2 text-muted-foreground transition-colors hover:bg-accent"
                       >
-                        <Minus className="h-3 w-3" />
+                        <Minus height={16} width={16} />
                       </button>
                       <span className="mx-2 text-sm font-medium">
-                        {item.quantity}{" "}
-                        {item.quantity === 1 ? "Ticket" : "Tickets"}
+                        {item.cartQuantity}
                       </span>
                       <button
                         onClick={() =>
-                          item.quantity < item.maxQuantity &&
-                          updateQuantity(item.id, item.quantity + 1)
+                          item.cartQuantity < item.num_sets &&
+                          updateQuantity(item.id, item.cartQuantity + 1)
                         }
-                        className={`rounded-full border p-1 ${
-                          item.quantity < item.maxQuantity
-                            ? "text-gray-600 hover:bg-gray-100"
-                            : "cursor-not-allowed text-gray-300"
-                        }`}
-                        disabled={item.quantity >= item.maxQuantity}
+                        className={
+                          "rounded-r-md p-2 text-muted-foreground transition-colors hover:bg-accent disabled:opacity-50"
+                        }
+                        disabled={item.cartQuantity >= item.num_sets}
                       >
-                        <Plus className="h-3 w-3" />
+                        <Plus height={16} width={16} />
                       </button>
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="text-red-500 hover:text-red-700 text-xs"
+                      className="text-destructive transition-colors hover:text-destructive/90"
                     >
-                      Remove
+                      <Trash2 width={16} height={16} />
                     </button>
                   </div>
                 </div>
               ))}
             </div>
 
-            <SheetFooter className="border-t pt-4">
-              <div className="w-full">
-                <div className="mb-4 flex justify-between">
-                  <span className="font-bold">Total:</span>
-                  <span className="font-bold">
-                    ${getTotalPrice().toFixed(2)}
-                  </span>
-                </div>
-                <button
-                  onClick={handleCheckout}
-                  className="flex w-full items-center justify-center"
-                >
-                  Checkout with Stripe
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </button>
-              </div>
+            <SheetFooter className="flex flex-col gap-2 px-4 pt-4">
+              <button
+                onClick={handleCheckout}
+                className="flex w-full items-center justify-center gap-1 rounded-md bg-primary py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+                disabled={isLoading}
+              >
+                {!isLoading ? (
+                  <span>Proceed to Payment</span>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Loader width={16} height={16} strokeWidth={"4px"} />
+                    <span>Processing...</span>
+                  </div>
+                )}
+              </button>
             </SheetFooter>
+
+            <div className="px-4 text-center text-sm text-muted-foreground">
+              By checking out, I agree to be bound by the
+              <br />
+              <SheetClose asChild>
+                <Link href="/terms" className="underline">
+                  Terms & Conditions
+                </Link>
+              </SheetClose>{" "}
+              and{" "}
+              <SheetClose asChild>
+                <Link href="/privacy" className="underline">
+                  Privacy Policy
+                </Link>
+              </SheetClose>
+              .
+            </div>
           </>
         ) : (
-          <div className="flex flex-grow flex-col items-center justify-between">
+          <div className="flex flex-grow flex-col items-center justify-between px-4">
             <div className="flex flex-grow items-center justify-center">
-              <p className="mb-4 text-muted-foreground">
+              <span className="mb-4 text-muted-foreground">
                 Your cart is currently empty.
-              </p>
+              </span>
             </div>
 
             <SheetClose asChild>
               <button className="w-full rounded-md bg-primary py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-                Browse Events
+                <span>Browse Events</span>
               </button>
             </SheetClose>
+          </div>
+        )}
+        {error && (
+          <div className="text-red-600 mt-2 px-4 text-center text-sm">
+            Error: {error}
           </div>
         )}
       </SheetContent>

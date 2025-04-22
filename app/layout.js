@@ -1,6 +1,6 @@
 import { Geist } from "next/font/google";
 import ThemeProvider from "./_providers/ThemeProvider";
-import { CartProvider } from "./_contexts/CartContext";
+import CartProvider from "./_contexts/CartContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,7 +10,8 @@ const geistSans = Geist({
 
 export const metadata = {
   title: "JTicketing",
-  description: "JTicketing is a ticketing platform for events.",
+  description:
+    "Jticketing is a platform for securing the hottest concert tickets with ease and confidence. ",
 };
 
 export default function RootLayout({ children }) {

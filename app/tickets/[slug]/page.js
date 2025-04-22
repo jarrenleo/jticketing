@@ -1,9 +1,15 @@
-import Navigation from "@/app/_components/navigation/Navigation";
 import Tickets from "@/app/_components/tickets/Tickets";
 import Footer from "@/app/_components/footer/Footer";
+import Navigation from "@/app/_components/navigation/Navigation"; // Make sure this is imported!
 import { getEvent, getEventTickets } from "@/app/_lib/dataService";
 
-export default async function Home({ params }) {
+export const metadata = {
+  title: "JTicketing | Tickets",
+  description:
+    "Jticketing is a platform for securing the hottest concert tickets with ease and confidence. ",
+};
+
+export default async function TicketPage({ params }) {
   const { slug } = await params;
 
   const [eventData, ticketsData] = await Promise.all([
@@ -12,10 +18,12 @@ export default async function Home({ params }) {
   ]);
 
   return (
-    <>
+    <div className="flex min-h-[100dvh] flex-col">
       <Navigation />
-      <Tickets ticketsData={ticketsData} eventData={eventData} />
+      <main className="flex flex-1 flex-col">
+        <Tickets ticketsData={ticketsData} eventData={eventData} />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }

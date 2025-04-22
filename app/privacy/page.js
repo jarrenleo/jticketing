@@ -3,7 +3,7 @@ import Footer from "../_components/footer/Footer";
 
 export default function PrivacyPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <>
       <Navigation />
       <main className="container mx-auto flex-grow px-4 py-8">
         <h1 className="mb-8 text-3xl font-bold">Privacy Policy</h1>
@@ -149,6 +149,6 @@ export default function PrivacyPage() {
         </section>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
