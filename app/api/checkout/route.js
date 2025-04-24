@@ -8,8 +8,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(request) {
   const { lineItems } = await request.json();
 
-  // const DOMAIN = process.env.NEXT_PUBLIC_BASE_URL;
-  const DOMAIN = "http://localhost:3000";
+  const DOMAIN = process.env.NEXT_PUBLIC_BASE_URL;
+  // const DOMAIN = "http://localhost:3000";
 
   try {
     const stripeLineItems = lineItems.map((item) => ({
