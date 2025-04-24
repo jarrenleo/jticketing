@@ -7,45 +7,36 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { retrieveImageUrl } from "@/app/_lib/utils";
 
-export default function Carousel({ events }) {
+export default function FeaturedCarousel({ events }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayInterval = 5000;
-
   let items = events;
   const featuredEvents = events.filter((event) => event.is_featured);
   if (featuredEvents.length) items = featuredEvents;
-
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
   };
-
   const previousSlide = () => {
     setCurrentIndex(
       (previousIndex) => (previousIndex - 1 + items.length) % items.length,
     );
   };
-
   const goToSlide = (index) => {
     setCurrentIndex(index);
     setIsAutoPlaying(false);
   };
-
   useEffect(() => {
     if (!isAutoPlaying) return;
-
     const interval = setInterval(() => {
       nextSlide();
     }, autoPlayInterval);
-
     return () => clearInterval(interval);
   }, [isAutoPlaying, autoPlayInterval]);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsAutoPlaying(true);
     }, 3000);
-
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
@@ -58,7 +49,7 @@ export default function Carousel({ events }) {
         visible: { opacity: 1, filter: "blur-none" },
       }}
     >
-      <div className="relative mb-16 h-96 overflow-hidden">
+      <section className="relative mb-8 h-48 overflow-hidden sm:h-96">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="absolute h-full w-full max-w-[883.2px]">
             {items.map((item, index) => {
@@ -66,7 +57,6 @@ export default function Carousel({ events }) {
                 (index - currentIndex + items.length) % items.length;
               const normalisedPosition =
                 position > 2 ? position - items.length : position;
-
               return (
                 <motion.div
                   key={item.slug}
@@ -110,28 +100,26 @@ export default function Carousel({ events }) {
             })}
           </div>
         </div>
-
         <button
           onClick={() => {
             previousSlide();
             setIsAutoPlaying(false);
           }}
-          className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/20 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
+          className="absolute left-4 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/20 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
           aria-label="Previous slide"
         >
-          <ChevronLeft width={20} height={20} />
+          <ChevronLeft width={16} height={16} />
         </button>
         <button
           onClick={() => {
             nextSlide();
             setIsAutoPlaying(false);
           }}
-          className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/20 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
+          className="absolute right-4 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/20 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
           aria-label="Next slide"
         >
-          <ChevronRight width={20} height={20} />
+          <ChevronRight width={16} height={16} />
         </button>
-
         <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 space-x-2">
           {items.map((_, index) => (
             <button
@@ -144,7 +132,7 @@ export default function Carousel({ events }) {
             />
           ))}
         </div>
-      </div>
+      </section>
     </motion.div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../../_contexts/CartContext";
@@ -33,6 +33,13 @@ export default function CartSheet() {
     isCartOpen,
     closeCart,
   } = useCart();
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   async function checkTicketsAvailability() {
     for (const item of items) {
@@ -209,9 +216,14 @@ export default function CartSheet() {
             </div>
 
             <SheetFooter className="flex flex-col gap-2 px-4 pt-4">
+              {error && (
+                <span className="mb-2 text-center text-sm font-medium text-destructive">
+                  {error}
+                </span>
+              )}
               <button
                 onClick={handleCheckout}
-                className="flex w-full items-center justify-center gap-1 rounded-md bg-primary py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-1 rounded-md bg-primary py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
                 disabled={isLoading}
               >
                 {!isLoading ? (
@@ -250,15 +262,10 @@ export default function CartSheet() {
             </div>
 
             <SheetClose asChild>
-              <button className="w-full rounded-md bg-primary py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+              <button className="w-full rounded-md bg-primary py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
                 <span>Browse Events</span>
               </button>
             </SheetClose>
-          </div>
-        )}
-        {error && (
-          <div className="text-red-600 mt-2 px-4 text-center text-sm">
-            Error: {error}
           </div>
         )}
       </SheetContent>

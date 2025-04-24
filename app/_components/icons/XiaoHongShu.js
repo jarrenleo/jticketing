@@ -4,8 +4,8 @@ export default function XiaoHongShu({ height, width, className }) {
       role="img"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      height={width}
-      width={height}
+      height={height}
+      width={width}
       className={className}
     >
       <title>Xiaohongshu</title>

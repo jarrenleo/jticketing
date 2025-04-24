@@ -164,7 +164,7 @@ export default function AboutPage() {
                   className="fill-foreground"
                 />
                 <span className="group-hover:text-primary group-hover:transition-colors">
-                  Xiao Hong Shu
+                  Red Note
                 </span>
               </Link>
             </li>

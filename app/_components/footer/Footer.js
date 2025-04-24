@@ -1,9 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/app/_components/ui/Popover";
 import Facebook from "../icons/Facebook";
 import WhatsApp from "../icons/WhatsApp";
 import Instagram from "../icons/Instagram";
 import XiaoHongShu from "../icons/XiaoHongShu";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -33,7 +39,7 @@ export default function Footer() {
         <div>
           <div className="mb-4 flex items-center gap-4 md:justify-end">
             <Link
-              href="https://www.facebook.com/groups/jfaikicks"
+              href="https://www.facebook.com/jfaikicks"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -66,7 +72,7 @@ export default function Footer() {
               />
             </Link>
             <Link
-              href="https://www.xiaohongshu.com/user/profile/1717129959771911"
+              href="https://www.xiaohongshu.com/user/profile/60d82dbb0000000001006b13"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -83,8 +89,56 @@ export default function Footer() {
               href="/about-us"
               className="transition-colors hover:text-primary"
             >
-              About Us
+              About us
             </Link>
+            <Popover>
+              <PopoverTrigger className="transition-colors hover:text-primary">
+                Contact us
+              </PopoverTrigger>
+              <PopoverContent>
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <h3 className="font-bold">Need help?</h3>
+                    <p className="text-sm text-muted-foreground">
+                      You may contact us via WhatsApp or email.
+                    </p>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Link
+                      href="https://wa.me/601165324028"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-2"
+                    >
+                      <WhatsApp
+                        height={16}
+                        width={16}
+                        className="fill-foreground transition-colors group-hover:fill-[#25D366]"
+                      />
+                      <span className="transition-colors group-hover:text-[#25D366]">
+                        +601165324028
+                      </span>
+                    </Link>
+                    <Link
+                      href="mailto:jfaikicks@gmail.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-2"
+                    >
+                      <Mail
+                        height={16}
+                        width={16}
+                        className="transition-colors group-hover:stroke-primary"
+                      />
+                      <span className="transition-colors group-hover:text-primary">
+                        jfaikicks@gmail.com
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
             <Link href="/faq" className="transition-colors hover:text-primary">
               FAQ
             </Link>

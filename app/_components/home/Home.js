@@ -1,4 +1,4 @@
-import Carousel from "./Carousel";
+import FeaturedCarousel from "./FeaturedCarousel";
 import Events from "./Events";
 import { getEvents } from "@/app/_lib/dataService";
 
@@ -10,12 +10,12 @@ export default async function Main() {
 
   if (!ticketsAvailableEvents.length)
     return (
-      <main className="container mx-auto flex flex-grow flex-col items-center justify-center gap-0.5 px-4 py-8 text-muted-foreground">
+      <div className="container mx-auto flex flex-grow flex-col items-center justify-center gap-0.5 px-4 py-8 text-muted-foreground">
         <span>
           There are currently no events with tickets available for purchase.
         </span>
         <span>Please check back again later.</span>
-      </main>
+      </div>
     );
 
   const sortedEvents = ticketsAvailableEvents.sort(
@@ -23,9 +23,9 @@ export default async function Main() {
   );
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <Carousel events={sortedEvents} />
+    <div className="container mx-auto px-4 py-8">
+      <FeaturedCarousel events={sortedEvents} />
       <Events events={sortedEvents} />
-    </main>
+    </div>
   );
 }

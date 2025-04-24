@@ -131,15 +131,4 @@
       stroke-dashoffset: -100;
     }
   }
-
-  /* Custom CSS for blurred gradient overlay in Carousel */
-  .blurred-gradient-overlay::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit; /* Inherit border-radius from parent */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    filter: blur(4px); /* Adjust blur amount as needed */
-    z-index: -1; /* Place behind the content */
-  }
 }

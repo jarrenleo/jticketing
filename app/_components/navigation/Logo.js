@@ -11,13 +11,7 @@ export default function Logo() {
   if (pathname === "/")
     return (
       <Link href="/" className="flex items-center gap-2">
-        <Image
-          src="/logo.png"
-          alt="JTicketing Logo"
-          width={24}
-          height={24}
-          className="cursor-pointer"
-        />
+        <Image src="/logo.png" alt="JTicketing Logo" width={24} height={24} />
         <span className="font-bold">JTicketing</span>
       </Link>
     );
@@ -27,9 +21,9 @@ export default function Logo() {
       <ChevronLeft
         width={24}
         height={24}
-        className="stroke-muted-foreground stroke-1 transition-colors group-hover:stroke-primary"
+        className="stroke-muted-foreground stroke-2 transition-colors group-hover:stroke-primary"
       />
-      <span className="text-muted-foreground transition-colors group-hover:text-primary">
+      <span className="font-semibold text-muted-foreground transition-colors group-hover:text-primary">
         Back to Home
       </span>
     </Link>

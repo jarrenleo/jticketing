@@ -11,8 +11,10 @@ const geistSans = Geist({
 export const metadata = {
   title: "JTicketing",
   description:
-    "Jticketing is a platform for securing the hottest concert tickets with ease and confidence.",
-  image: "./icon.png",
+    "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
+  openGraph: {
+    images: ["./icon.png"],
+  },
 };
 
 export default function RootLayout({ children }) {

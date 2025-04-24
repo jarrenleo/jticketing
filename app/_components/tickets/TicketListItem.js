@@ -33,7 +33,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
       </span>
 
       <Button className="w-full" onClick={() => onAddToCart(ticket)}>
-        <span className="text-sm">Add to Cart</span>
+        <span className="text-sm font-semibold">Add to Cart</span>
       </Button>
     </div>
   );

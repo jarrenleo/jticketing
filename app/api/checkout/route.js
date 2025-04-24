@@ -8,8 +8,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export async function POST(request) {
   const { lineItems } = await request.json();
 
-  const DOMAIN = process.env.NEXT_PUBLIC_BASE_URL;
-  // const DOMAIN = "localhost:3000";
+  // const DOMAIN = process.env.NEXT_PUBLIC_BASE_URL;
+  const DOMAIN = "http://localhost:3000";
 
   try {
     const stripeLineItems = lineItems.map((item) => ({
@@ -37,9 +37,6 @@ export async function POST(request) {
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Internal Server Error";
-    return NextResponse.json(
-      { error: `Stripe Error: ${errorMessage}` },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

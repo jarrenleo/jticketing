@@ -6,7 +6,9 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navigation />
-      <Main />
+      <main className="flex flex-1 flex-col">
+        <Main />
+      </main>
       <Footer />
     </div>
   );
