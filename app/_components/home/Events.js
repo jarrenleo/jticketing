@@ -32,9 +32,9 @@ export default function Events({ events }) {
 
   return (
     <section>
-      <h2 className="mb-4 text-2xl font-bold">Events</h2>
+      <h2 className="mb-4 text-lg font-bold">Events</h2>
 
-      <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {displayedEvents.map((event, index) => (
           <motion.div
             key={event.slug}

@@ -5,8 +5,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../_components/ui/Accordion";
+import { Button } from "../_components/ui/Button";
 import Navigation from "../_components/navigation/Navigation";
 import Footer from "../_components/footer/Footer";
+import WhatsApp from "../_components/icons/WhatsApp";
+import { Mail } from "lucide-react";
 
 const faqItems = [
   {
@@ -62,21 +65,27 @@ const faqItems = [
           response or by email. We are here to assist you with any concerns.
         </p>
         <br />
-        <Link
-          href="https://wa.me/601165324028"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-foreground transition-colors hover:text-primary"
-        >
-          WhatsApp Us
-        </Link>
-        <span> | </span>
-        <Link
-          href="mailto:jfaikicks@gmail.com"
-          className="text-foreground transition-colors hover:text-primary"
-        >
-          Email Us
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            href="https://wa.me/601165324028"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+          >
+            <WhatsApp height={16} width={16} className="fill-foreground" />
+            <span className="text-foreground">WhatsApp</span>
+          </Link>
+
+          <Link
+            href="mailto:jfaikicks@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+          >
+            <Mail height={16} width={16} className="stroke-foreground" />
+            <span className="text-foreground">Email</span>
+          </Link>
+        </div>
       </>
     ),
   },
@@ -84,10 +93,10 @@ const faqItems = [
 
 export default function FAQPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
-      <main className="container mx-auto flex-1 px-4 py-8">
-        <h2 className="mb-4 text-3xl font-bold">
+      <main className="flex flex-1 flex-col px-4 py-8">
+        <h2 className="mb-8 text-2xl font-bold">
           Frequently Asked Questions (FAQ)
         </h2>
         <Accordion type="single" collapsible>

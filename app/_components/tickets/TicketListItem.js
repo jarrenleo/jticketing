@@ -4,8 +4,7 @@ import { Button } from "../ui/Button";
 import { formatDateTime } from "../../_lib/utils";
 
 export default function TicketListItem({ ticket, onAddToCart }) {
-  const { category, section, row, price, quantity, num_sets, datetime } =
-    ticket;
+  const { category, section, row, price, quantity, num_sets, date } = ticket;
 
   return (
     <div className="flex flex-col rounded-md border border-border p-4">
@@ -29,7 +28,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
       </div>
 
       <span className="mb-4 text-sm text-muted-foreground">
-        {formatDateTime(datetime)}
+        {formatDateTime(date)}
       </span>
 
       <Button className="w-full" onClick={() => onAddToCart(ticket)}>

@@ -8,14 +8,12 @@ export default async function Navigation() {
   const events = await getEvents();
 
   return (
-    <nav className="sticky top-0 z-20 border-b border-border">
-      <div className="container mx-auto flex items-center justify-between bg-background/80 px-4 py-3 backdrop-blur-sm">
-        <Logo />
-        <div className="flex items-center gap-0.5">
-          <ThemeToggle />
-          <SearchButton events={events} />
-          <CartButton />
-        </div>
+    <nav className="sticky top-0 z-50 flex items-center justify-between bg-background/80 px-4 py-2 backdrop-blur-sm">
+      <Logo />
+      <div className="flex items-center gap-0.5">
+        <ThemeToggle />
+        <SearchButton events={events} />
+        <CartButton />
       </div>
     </nav>
   );

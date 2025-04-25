@@ -1,6 +1,10 @@
+import Link from "next/link";
 import FeaturedCarousel from "./FeaturedCarousel";
 import Events from "./Events";
 import { getEvents } from "@/app/_lib/dataService";
+import Facebook from "../icons/Facebook";
+import Instagram from "../icons/Instagram";
+import XiaoHongShu from "../icons/XiaoHongShu";
 
 export default async function Main() {
   const events = await getEvents();
@@ -10,11 +14,50 @@ export default async function Main() {
 
   if (!ticketsAvailableEvents.length)
     return (
-      <div className="container mx-auto flex flex-grow flex-col items-center justify-center gap-0.5 px-4 py-8 text-muted-foreground">
-        <span>
-          There are currently no events with tickets available for purchase.
+      <div className="flex flex-1 flex-col items-center justify-center px-4">
+        <span className="mb-2 text-2xl font-bold text-foreground">
+          We are sold out
         </span>
-        <span>Please check back again later.</span>
+
+        <span className="mb-4 text-muted-foreground">
+          Please follow our social media for updates
+        </span>
+
+        <div className="flex items-center gap-4">
+          <Link
+            href="https://www.facebook.com/jfaikicks"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Facebook
+              height={24}
+              width={24}
+              className="fill-foreground transition-colors hover:fill-[#0866FF]"
+            />
+          </Link>
+          <Link
+            href="https://www.instagram.com/jfaikicks"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Instagram
+              height={24}
+              width={24}
+              className="fill-foreground transition-colors hover:fill-[#FF0069]"
+            />
+          </Link>
+          <Link
+            href="https://www.xiaohongshu.com/user/profile/60d82dbb0000000001006b13"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <XiaoHongShu
+              height={24}
+              width={24}
+              className="fill-foreground transition-colors hover:fill-[#FF2442]"
+            />
+          </Link>
+        </div>
       </div>
     );
 
@@ -23,7 +66,7 @@ export default async function Main() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="px-4 py-8">
       <FeaturedCarousel events={sortedEvents} />
       <Events events={sortedEvents} />
     </div>

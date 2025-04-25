@@ -20,8 +20,8 @@ import { getUniqueData, formatDateTime } from "@/app/_lib/utils";
 import { SlidersHorizontal } from "lucide-react";
 
 export default function FilterSheet({
-  selectedDateTime,
-  setSelectedDateTime,
+  selectedDate,
+  setSelectedDate,
   selectedQuantity,
   setSelectedQuantity,
   selectedCategory,
@@ -30,13 +30,13 @@ export default function FilterSheet({
   setSelectedSection,
   tickets,
 }) {
-  const availableDateTimes = getUniqueData(tickets, "datetime");
+  const availableDates = getUniqueData(tickets, "date");
   const availableQuantities = getUniqueData(tickets, "quantity");
   const availableCategories = getUniqueData(tickets, "category");
   const availableSections = getUniqueData(tickets, "section");
 
   function clearFilters() {
-    setSelectedDateTime("");
+    setSelectedDate("");
     setSelectedQuantity("");
     setSelectedCategory("");
     setSelectedSection("");
@@ -57,20 +57,15 @@ export default function FilterSheet({
         <div className="flex flex-1 flex-col justify-between px-4">
           <div className="space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium">
-                Date & Time
-              </label>
-              <Select
-                value={selectedDateTime}
-                onValueChange={setSelectedDateTime}
-              >
+              <label className="mb-2 block text-sm font-medium">Date</label>
+              <Select value={selectedDate} onValueChange={setSelectedDate}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Date & Time" />
+                  <SelectValue placeholder="Select Date" />
                 </SelectTrigger>
                 <SelectContent>
-                  {availableDateTimes.map((datetime, index) => (
-                    <SelectItem key={index} value={datetime}>
-                      {formatDateTime(datetime)}
+                  {availableDates.map((date, index) => (
+                    <SelectItem key={index} value={date}>
+                      {formatDateTime(date)}
                     </SelectItem>
                   ))}
                 </SelectContent>

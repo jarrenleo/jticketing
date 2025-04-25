@@ -3,13 +3,13 @@ import Footer from "../_components/footer/Footer";
 
 export default function TermsPage() {
   return (
-    <>
+    <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
-      <main className="container mx-auto flex-grow px-4 py-8">
-        <h1 className="mb-8 text-3xl font-bold">Terms and Conditions</h1>
+      <main className="flex flex-1 flex-col px-4 py-8">
+        <h1 className="mb-8 text-2xl font-bold">Terms and Conditions</h1>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Introduction</h2>
+          <h2 className="mb-2 text-lg font-bold">Introduction</h2>
           <p>
             Welcome to JTicketing.com! By accessing or using our website, you
             agree to comply with the following Terms and Conditions. Please read
@@ -18,7 +18,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Ticket Purchase & Pricing</h2>
+          <h2 className="mb-2 text-lg font-bold">Ticket Purchase & Pricing</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>
               All ticket prices are listed in the applicable currency and may be
@@ -36,7 +36,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Order Confirmation</h2>
+          <h2 className="mb-2 text-lg font-bold">Order Confirmation</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>
               Upon successful payment, you will receive an email confirmation
@@ -55,7 +55,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">
+          <h2 className="mb-2 text-lg font-bold">
             Refund & Cancellation Policy
           </h2>
           <ul className="list-disc space-y-2 pl-4">
@@ -75,7 +75,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">
+          <h2 className="mb-2 text-lg font-bold">
             Event Changes & Postponements
           </h2>
           <ul className="list-disc space-y-2 pl-4">
@@ -95,7 +95,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Delivery of Tickets</h2>
+          <h2 className="mb-2 text-lg font-bold">Delivery of Tickets</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>We only provide e-tickets and PAH (Print-at-Home) tickets.</li>
             <li>Tickets will be sent via email or through WhatsApp.</li>
@@ -107,7 +107,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Prohibited Activities</h2>
+          <h2 className="mb-2 text-lg font-bold">Prohibited Activities</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>
               Reselling tickets purchased from JTicketing.com for profit is
@@ -125,7 +125,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Liability Disclaimer</h2>
+          <h2 className="mb-2 text-lg font-bold">Liability Disclaimer</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>
               JTicketing.com acts as a ticket marketplace and is not responsible
@@ -143,7 +143,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">
+          <h2 className="mb-2 text-lg font-bold">
             Privacy Policy & Data Protection
           </h2>
           <ul className="list-disc space-y-2 pl-4">
@@ -163,7 +163,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Governing Law</h2>
+          <h2 className="mb-2 text-lg font-bold">Governing Law</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>
               These Terms and Conditions are governed by the laws of Malaysia
@@ -177,7 +177,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Contact Information</h2>
+          <h2 className="mb-2 text-lg font-bold">Contact Information</h2>
           <p>
             For any inquiries, please reach out to our customer support team via
             email or our contact page.
@@ -185,13 +185,13 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <p className="font-medium">
+          <p className="font-bold">
             By using JTicketing.com, you acknowledge and agree to these Terms
             and Conditions.
           </p>
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

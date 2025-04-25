@@ -4,7 +4,7 @@ import Footer from "./_components/footer/Footer";
 
 export default async function HomePage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
       <main className="flex flex-1 flex-col">
         <Main />

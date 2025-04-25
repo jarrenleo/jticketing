@@ -18,7 +18,7 @@ export async function POST(request) {
         currency: "myr",
         product_data: {
           name: `${item.artist} ${item.title}`,
-          description: `${item.category}. Section ${item.section}, Row ${item.row}. ${formatDateTime(item.datetime)}`,
+          description: `${item.category}. Section ${item.section}, Row ${item.row}. ${formatDateTime(item.date)}`,
           images: [retrieveImageUrl("events", item.image_file)],
         },
         unit_amount: item.price * 100,

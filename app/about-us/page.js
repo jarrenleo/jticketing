@@ -9,12 +9,13 @@ import { ShoppingBag, ExternalLink } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <>
+    <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
-      <main className="container mx-auto flex-grow px-4 py-8">
-        <h1 className="mb-4 text-3xl font-bold">About Us</h1>
+      <main className="flex flex-1 flex-col px-4 py-8">
+        <h1 className="mb-8 text-2xl font-bold">About Us</h1>
 
         <section className="mb-8">
+          <h2 className="mb-2 text-lg font-bold">Introduction</h2>
           <p>
             Welcome to JTicketing.com, your go-to platform for securing the
             hottest concert tickets with ease and confidence. We are passionate
@@ -25,7 +26,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Who We Are</h2>
+          <h2 className="mb-2 text-lg font-bold">Who We Are</h2>
           <p>
             JTicketing.com is part of JFai Kicks, a company founded in 2021.
             Initially focused on selling sneakers, we have since expanded into
@@ -39,7 +40,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Why Choose Us</h2>
+          <h2 className="mb-2 text-lg font-bold">Why Choose Us</h2>
           <ul className="space-y-2">
             <li>
               <strong>Trusted & Reliable</strong> – We prioritise customer trust
@@ -61,7 +62,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Our Commitment</h2>
+          <h2 className="mb-2 text-lg font-bold">Our Commitment</h2>
           <p>
             At JTicketing.com, we understand that concerts are more than just
             events—they are unforgettable moments. That is why we are dedicated
@@ -71,7 +72,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Follow Us</h2>
+          <h2 className="mb-2 text-lg font-bold">Follow Us</h2>
           <ul className="space-y-2">
             <li>
               <Link
@@ -172,7 +173,7 @@ export default function AboutPage() {
         </section>
 
         <section>
-          <h2 className="mb-4 text-xl font-bold">Legit References</h2>
+          <h2 className="mb-2 text-lg font-bold">Legit References</h2>
           <ul className="space-y-2">
             <li>
               <Link
@@ -243,6 +244,6 @@ export default function AboutPage() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

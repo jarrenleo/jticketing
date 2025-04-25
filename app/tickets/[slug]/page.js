@@ -33,7 +33,7 @@ export default async function TicketPage({ params }) {
   ]);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
       <main className="flex flex-1 flex-col">
         <Tickets ticketsData={ticketsData} eventData={eventData} />

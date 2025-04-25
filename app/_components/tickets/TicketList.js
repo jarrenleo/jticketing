@@ -11,7 +11,7 @@ function filterTickets(tickets, field, value) {
 
 export default function TicketList({ tickets, onAddToCart }) {
   const [displayTickets, setDisplayTickets] = useState([]);
-  const [selectedDateTime, setSelectedDateTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
@@ -20,12 +20,8 @@ export default function TicketList({ tickets, onAddToCart }) {
   useEffect(() => {
     let filteredTickets = tickets;
 
-    if (selectedDateTime)
-      filteredTickets = filterTickets(
-        filteredTickets,
-        "datetime",
-        selectedDateTime,
-      );
+    if (selectedDate)
+      filteredTickets = filterTickets(filteredTickets, "date", selectedDate);
 
     if (selectedQuantity)
       filteredTickets = filterTickets(
@@ -70,7 +66,7 @@ export default function TicketList({ tickets, onAddToCart }) {
 
     setDisplayTickets(filteredTickets);
   }, [
-    selectedDateTime,
+    selectedDate,
     selectedQuantity,
     selectedCategory,
     selectedSection,
@@ -83,8 +79,8 @@ export default function TicketList({ tickets, onAddToCart }) {
         <h2 className="text-xl font-bold">Tickets</h2>
         <div className="flex items-center gap-2">
           <FilterSheet
-            selectedDateTime={selectedDateTime}
-            setSelectedDateTime={setSelectedDateTime}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
             selectedQuantity={selectedQuantity}
             setSelectedQuantity={setSelectedQuantity}
             selectedCategory={selectedCategory}

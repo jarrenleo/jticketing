@@ -3,13 +3,13 @@ import Footer from "../_components/footer/Footer";
 
 export default function PrivacyPage() {
   return (
-    <>
+    <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
-      <main className="container mx-auto flex-grow px-4 py-8">
-        <h1 className="mb-8 text-3xl font-bold">Privacy Policy</h1>
+      <main className="flex flex-1 flex-col px-4 py-8">
+        <h1 className="mb-8 text-2xl font-bold">Privacy Policy</h1>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Introduction</h2>
+          <h2 className="mb-2 text-lg font-bold">Introduction</h2>
           <p>
             At JTicketing.com, we are committed to protecting your privacy and
             ensuring that your personal data is handled securely and
@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Information We Collect</h2>
+          <h2 className="mb-2 text-lg font-bold">Information We Collect</h2>
           <p className="mb-2">
             We may collect the following types of personal information:
           </p>
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">
+          <h2 className="mb-2 text-lg font-bold">
             How We Use Your Information
           </h2>
           <p className="mb-2">
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Data Sharing & Security</h2>
+          <h2 className="mb-2 text-lg font-bold">Data Sharing & Security</h2>
           <ul className="list-disc space-y-2 pl-4">
             <li>
               We do not sell or share your personal data with third parties for
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">
+          <h2 className="mb-2 text-lg font-bold">
             Cookies & Tracking Technologies
           </h2>
           <ul className="list-disc space-y-2 pl-4">
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Your Rights & Choices</h2>
+          <h2 className="mb-2 text-lg font-bold">Your Rights & Choices</h2>
           <p>
             You have the right to request details about how we process your
             data.
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Data Retention</h2>
+          <h2 className="mb-2 text-lg font-bold">Data Retention</h2>
           <p>
             We retain your personal data only as long as necessary for
             transaction processing, legal compliance, and security purposes.
@@ -118,7 +118,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Third-Party Links</h2>
+          <h2 className="mb-2 text-lg font-bold">Third-Party Links</h2>
           <p>
             Our website may contain links to third-party sites. We are not
             responsible for the privacy practices of external websites.
@@ -126,7 +126,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Changes to This Policy</h2>
+          <h2 className="mb-2 text-lg font-bold">Changes to This Policy</h2>
           <p>
             We may update this Privacy Policy from time to time. Changes will be
             posted on this page with an updated revision date.
@@ -134,7 +134,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Contact Us</h2>
+          <h2 className="mb-2 text-lg font-bold">Contact Us</h2>
           <p>
             For any privacy-related inquiries or concerns, please contact our
             support team via email or our WhatsApp.
@@ -142,13 +142,13 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <p className="font-medium">
+          <p className="font-bold">
             By using JTicketing.com, you consent to the collection and use of
             your information as outlined in this Privacy Policy.
           </p>
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

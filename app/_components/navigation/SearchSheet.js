@@ -68,7 +68,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                             href={`/tickets/${event.slug}`}
                             className="flex items-center gap-4 p-4 transition-colors hover:bg-accent"
                           >
-                            <div className="relative h-12 w-[91px] flex-shrink-0 overflow-hidden rounded-md">
+                            <div className="relative h-12 w-[91px] overflow-hidden rounded-md">
                               <Image
                                 src={retrieveImageUrl(
                                   "events",
@@ -79,7 +79,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                                 className="object-cover"
                               />
                             </div>
-                            <div className="flex flex-col gap-0.5">
+                            <div className="flex flex-col">
                               <span className="line-clamp-1 text-sm font-semibold">
                                 {event.artist}
                               </span>
@@ -94,7 +94,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                   </ul>
                 </div>
               ) : (
-                <p className="py-8 text-center">No results found.</p>
+                <p className="py-8 text-center">No results found</p>
               )}
             </div>
           )}

@@ -154,7 +154,7 @@ export default function CartSheet() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex justify-between font-medium">
+                  <div className="flex justify-between font-semibold">
                     <span className="line-clamp-1">{item.category}</span>
                     <span>RM {item.price * item.quantity}</span>
                   </div>
