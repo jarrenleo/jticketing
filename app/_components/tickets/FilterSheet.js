@@ -120,12 +120,8 @@ export default function FilterSheet({
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            className="w-full text-base"
-            onClick={clearFilters}
-          >
-            Clear All Filters
+          <Button variant="outline" className="w-full" onClick={clearFilters}>
+            <span className="font-semibold">Clear All Filters</span>
           </Button>
         </div>
       </SheetContent>

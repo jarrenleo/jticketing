@@ -36,7 +36,7 @@ export function Combobox({ value, setValue, field, fieldData }) {
           <ChevronDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
         <Command>
           <CommandInput placeholder={`Search ${field}`} className="h-9" />
           <CommandList>
