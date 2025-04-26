@@ -5,12 +5,24 @@ import Image from "next/image";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import { retrieveImageUrl } from "@/app/_lib/utils";
 
+// Helper function to calculate distance between two points
+function getDistance(touch1, touch2) {
+  const dx = touch1.clientX - touch2.clientX;
+  const dy = touch1.clientY - touch2.clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
 export default function SeatMap({ event }) {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
+
+  // State for pinch-to-zoom
+  const [isPinching, setIsPinching] = useState(false);
+  const [pinchStartScale, setPinchStartScale] = useState(1);
+  const [touchStartDistance, setTouchStartDistance] = useState(0);
 
   function zoomIn() {
     setScale((prev) => Math.min(prev + 0.25, 3));
@@ -25,12 +37,18 @@ export default function SeatMap({ event }) {
     setPosition({ x: 0, y: 0 });
   }
 
+  // --- Mouse Event Handlers ---
   function handleMouseDown(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    // Prevent default only if not clicking buttons inside
+    if (e.target === containerRef.current || e.target.tagName === "IMG") {
+      e.preventDefault();
+      e.stopPropagation();
 
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+      if (isPinching) return; // Don't drag if pinching
+
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+    }
   }
 
   function handleMouseMove(e) {
@@ -46,29 +64,85 @@ export default function SeatMap({ event }) {
   }
 
   function handleMouseUp(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setIsDragging(false);
+    // Only stop dragging if initiated
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+    }
   }
 
   function handleMouseLeave(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setIsDragging(false);
+    // Only stop dragging if initiated
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+    }
   }
 
   function handleWheel(e) {
     e.preventDefault();
 
-    // Determine zoom direction based on wheel delta
     const zoomFactor = 0.1;
-    e.deltaY < 0
-      ? // Scroll up - zoom in
-        setScale((prev) => Math.min(prev + zoomFactor, 3))
-      : // Scroll down - zoom out
-        setScale((prev) => Math.max(prev - zoomFactor, 0.5));
+    const newScale = e.deltaY < 0 ? scale + zoomFactor : scale - zoomFactor;
+    const clampedScale = Math.max(0.5, Math.min(newScale, 3));
+    setScale(clampedScale);
+  }
+
+  // --- Touch Event Handlers ---
+  function handleTouchStart(e) {
+    e.preventDefault(); // Prevent default scroll/zoom behavior
+    e.stopPropagation();
+
+    const touches = e.touches;
+
+    if (touches.length === 2) {
+      const dist = getDistance(touches[0], touches[1]);
+      setIsPinching(true);
+      setIsDragging(false); // Ensure dragging stops if pinching starts
+      setPinchStartScale(scale);
+      setTouchStartDistance(dist);
+    } else if (touches.length === 1 && !isPinching) {
+      setIsDragging(true);
+      setDragStart({
+        x: touches[0].clientX - position.x,
+        y: touches[0].clientY - position.y,
+      });
+    }
+  }
+
+  function handleTouchMove(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const touches = e.touches;
+
+    if (isPinching && touches.length === 2) {
+      const currentDist = getDistance(touches[0], touches[1]);
+      if (touchStartDistance > 0) {
+        const scaleFactor = currentDist / touchStartDistance;
+        const newScale = pinchStartScale * scaleFactor;
+        const clampedScale = Math.max(0.5, Math.min(newScale, 3));
+        setScale(clampedScale);
+      }
+    } else if (isDragging && touches.length === 1) {
+      const newX = touches[0].clientX - dragStart.x;
+      const newY = touches[0].clientY - dragStart.y;
+      setPosition({ x: newX, y: newY });
+    }
+  }
+
+  function handleTouchEnd(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.touches.length < 2) {
+      setIsPinching(false);
+    }
+    if (e.touches.length === 0) {
+      setIsDragging(false);
+    }
   }
 
   if (!event) return null;
@@ -103,15 +177,18 @@ export default function SeatMap({ event }) {
       </div>
       <div
         ref={containerRef}
-        className="relative h-[500px] w-full cursor-grab overflow-hidden active:cursor-grabbing"
+        className="relative h-[500px] w-full cursor-grab touch-none overflow-hidden active:cursor-grabbing"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <div
-          className="absolute transition-transform duration-300 ease-out"
+          className="absolute transition-transform duration-100 ease-out"
           style={{
             transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
             transformOrigin: "center",
