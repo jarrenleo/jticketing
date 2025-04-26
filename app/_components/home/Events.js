@@ -5,25 +5,18 @@ import { motion } from "motion/react";
 import EventCard from "./EventCard";
 
 export default function Events({ events }) {
-  const [initialDisplayCount, setInitialDisplayCount] = useState(4);
-  const [displayCount, setDisplayCount] = useState(initialDisplayCount);
+  const [initialDisplayCount, setInitialDisplayCount] = useState();
+  const [displayCount, setDisplayCount] = useState();
 
   const displayedEvents = events.slice(0, displayCount);
   const hasMoreEvents = displayedEvents.length < events.length;
 
   useEffect(() => {
-    function updateDisplayCount() {
-      const displayCount =
-        window.innerWidth >= 1280 ? 8 : window.innerWidth >= 1024 ? 6 : 4;
+    const displayCount =
+      window.innerWidth >= 1280 ? 8 : window.innerWidth >= 1024 ? 6 : 4;
 
-      setInitialDisplayCount(displayCount);
-      setDisplayCount(displayCount);
-    }
-
-    updateDisplayCount();
-    window.addEventListener("resize", updateDisplayCount);
-
-    return () => window.removeEventListener("resize", updateDisplayCount);
+    setInitialDisplayCount(displayCount);
+    setDisplayCount(displayCount);
   }, []);
 
   function loadMoreEvents() {
@@ -55,7 +48,7 @@ export default function Events({ events }) {
         <div className="flex justify-center">
           <button
             onClick={loadMoreEvents}
-            className="mx-2 rounded-md border border-border px-4 py-2 text-sm font-medium transition hover:bg-accent"
+            className="mt-4 rounded-md border border-border px-4 py-2 text-sm font-medium transition hover:bg-accent"
           >
             Show More
           </button>

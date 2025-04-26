@@ -62,7 +62,7 @@ export default async function Main() {
     );
 
   const sortedEvents = ticketsAvailableEvents.sort(
-    (a, b) => new Date(a.openingDatetime) - new Date(b.openingDatetime),
+    (a, b) => new Date(a.opening_date) - new Date(b.opening_date),
   );
 
   return (

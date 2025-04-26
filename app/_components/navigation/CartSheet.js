@@ -170,7 +170,7 @@ export default function CartSheet() {
                   </div>
 
                   <div className="mb-4 text-sm text-muted-foreground">
-                    {formatDateTime(item.datetime)}
+                    {formatDateTime(item.date)}
                   </div>
 
                   <div className="flex items-center justify-between">
