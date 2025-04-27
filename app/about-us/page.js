@@ -109,7 +109,7 @@ export default function AboutPage() {
               >
                 <WhatsApp height={16} width={16} className="fill-foreground" />
                 <span className="group-hover:text-primary group-hover:transition-colors">
-                  WhatsApp Number
+                  WhatsApp Contact
                 </span>
               </Link>
             </li>

@@ -13,7 +13,7 @@ export default function EventCard({ event }) {
         />
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col">
         <span className="line-clamp-1 text-lg font-bold">{event.artist}</span>
         <span className="mb-2 line-clamp-1 text-sm text-muted-foreground">
           {event.title}

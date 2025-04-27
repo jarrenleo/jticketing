@@ -27,8 +27,16 @@ export async function POST(request) {
 
     const session = await stripe.checkout.sessions.create({
       line_items: stripeLineItems,
+      custom_fields: [
+        {
+          key: "name",
+          label: { type: "custom", custom: "Name" },
+          type: "text",
+          optional: false,
+        },
+      ],
+      phone_number_collection: { enabled: true },
       mode: "payment",
-      payment_method_types: ["card", "grabpay", "paynow"],
       success_url: `${DOMAIN}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${DOMAIN}/`,
     });

@@ -7,7 +7,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
   const { category, section, row, price, quantity, num_sets, date } = ticket;
 
   return (
-    <div className="flex flex-col rounded-md border border-border p-4">
+    <div className="flex h-[189.33px] flex-col rounded-md border border-border p-4">
       <div className="flex items-center justify-between text-lg font-bold">
         <span className="line-clamp-1">{category}</span>
         <span>RM {price}</span>
@@ -22,7 +22,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
 
       <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
         <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">
-          Set of {quantity}
+          {quantity > 1 ? `Set of ${quantity}` : "Single"}
         </span>
         <span className="text-sm text-primary">{num_sets} sets available</span>
       </div>

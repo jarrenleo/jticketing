@@ -94,7 +94,9 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                   </ul>
                 </div>
               ) : (
-                <p className="py-8 text-center">No results found</p>
+                <p className="py-8 text-center text-muted-foreground">
+                  No results found.
+                </p>
               )}
             </div>
           )}

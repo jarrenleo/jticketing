@@ -9,7 +9,7 @@ function filterTickets(tickets, field, value) {
   return tickets.filter((ticket) => ticket[field] === value);
 }
 
-export default function TicketList({ tickets, onAddToCart }) {
+export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
   const [displayTickets, setDisplayTickets] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState("");
@@ -97,7 +97,8 @@ export default function TicketList({ tickets, onAddToCart }) {
       </div>
 
       <div
-        className={`flex flex-col gap-4 ${displayTickets.length && "sm:grid sm:flex-none sm:grid-cols-2 sm:gap-4"}`}
+        className={`flex flex-col gap-4 ${displayTickets.length ? "sm:grid sm:flex-none sm:grid-cols-2 sm:gap-4" : ""} overflow-y-auto scrollbar-hide`}
+        style={ticketScrollArea ? { height: `${ticketScrollArea}px` } : {}}
       >
         {displayTickets.length ? (
           displayTickets.map((ticket) => (

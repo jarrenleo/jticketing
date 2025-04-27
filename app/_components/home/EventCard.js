@@ -11,7 +11,7 @@ export default function EventCard({ event }) {
           src={retrieveImageUrl("events", event.image_file)}
           alt={`${event.artist} - ${event.title}`}
           fill
-          className="object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:duration-300 group-hover:ease-out"
+          className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:duration-300 group-hover:ease-out"
         />
       </div>
       <div className="py-4">

@@ -32,7 +32,7 @@ export default function Footer() {
         </div>
 
         <span className="text-sm text-muted-foreground">
-          Secure the hottest tickets with ease and confidence
+          Secure the hottest tickets with ease and confidence.
         </span>
       </div>
 

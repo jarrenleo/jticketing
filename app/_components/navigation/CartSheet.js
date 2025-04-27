@@ -257,7 +257,7 @@ export default function CartSheet() {
           <div className="flex flex-grow flex-col items-center justify-between px-4">
             <div className="flex flex-grow items-center justify-center">
               <span className="mb-4 text-muted-foreground">
-                Your cart is currently empty.
+                Your cart is empty.
               </span>
             </div>
 
