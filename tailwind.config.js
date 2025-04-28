@@ -52,10 +52,6 @@ module.exports = {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
-        white: "hsl(var(--white))",
-        black: "hsl(var(--black))",
-        green: "hsl(var(--green))",
-        red: "hsl(var(--red))",
       },
       keyframes: {
         "accordion-down": {

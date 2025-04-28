@@ -59,3 +59,20 @@ export async function checkTicketAvailability(id, num_sets) {
 
   return data[0];
 }
+
+export async function updateTicketInventory(ticketId, quantityPurchased) {
+  const { error } = await supabase.rpc("update_ticket_inventory", {
+    p_id: ticketId,
+    p_quantity: quantityPurchased,
+  });
+
+  if (error) {
+    console.error(
+      `Error updating inventory for ticket ID ${ticketId} by ${quantityPurchased}:`,
+      error,
+    );
+    return null;
+  }
+
+  return true;
+}

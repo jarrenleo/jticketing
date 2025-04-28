@@ -6,6 +6,8 @@ import { formatDateTime } from "../../_lib/utils";
 export default function TicketListItem({ ticket, onAddToCart }) {
   const { category, section, row, price, quantity, num_sets, date } = ticket;
 
+  if (!num_sets) return null;
+
   return (
     <div className="flex h-[189.33px] flex-col rounded-md border border-border p-4">
       <div className="flex items-center justify-between text-lg font-bold">

@@ -4,22 +4,24 @@ import { retrieveImageUrl } from "@/app/_lib/utils";
 import { formatDateTime } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const domain = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function POST(request) {
   const { lineItems } = await request.json();
 
-  const DOMAIN = process.env.NEXT_PUBLIC_BASE_URL;
-  // const DOMAIN = "http://localhost:3000";
-
   try {
     const stripeLineItems = lineItems.map((item) => ({
-      quantity: item.quantity,
+      quantity: item.quantity * item.cartQuantity,
       price_data: {
         currency: "myr",
         product_data: {
-          name: `${item.artist} ${item.title}`,
-          description: `${item.category}. Section ${item.section}, Row ${item.row}. ${formatDateTime(item.date)}`,
+          name: `${item.artist} - ${item.title}`,
+          description: `${item.category}. Section ${item.section}, Row ${item.row}. ${formatDateTime(item.date)}.`,
           images: [retrieveImageUrl("events", item.image_file)],
+          metadata: {
+            db_ticket_id: item.id,
+            set_of: item.quantity,
+          },
         },
         unit_amount: item.price * 100,
       },
@@ -29,16 +31,16 @@ export async function POST(request) {
       line_items: stripeLineItems,
       custom_fields: [
         {
-          key: "name",
-          label: { type: "custom", custom: "Name" },
+          key: "customer_name",
+          label: { type: "custom", custom: "Customer Name" },
           type: "text",
           optional: false,
         },
       ],
       phone_number_collection: { enabled: true },
       mode: "payment",
-      success_url: `${DOMAIN}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${DOMAIN}/`,
+      success_url: `${domain}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: domain,
     });
 
     return NextResponse.json({ sessionId: session.id });

@@ -97,22 +97,26 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
       </div>
 
       <div
-        className={`flex flex-col gap-4 ${displayTickets.length ? "sm:grid sm:flex-none sm:grid-cols-2 sm:gap-4" : ""} overflow-y-auto scrollbar-hide`}
+        className={`${ticketScrollArea && "scrollbar-hide overflow-y-auto"}`}
         style={ticketScrollArea ? { height: `${ticketScrollArea}px` } : {}}
       >
-        {displayTickets.length ? (
-          displayTickets.map((ticket) => (
-            <TicketListItem
-              key={ticket.id}
-              ticket={ticket}
-              onAddToCart={onAddToCart}
-            />
-          ))
-        ) : (
-          <div className="mt-8 text-center text-muted-foreground">
-            No tickets available.
-          </div>
-        )}
+        <div
+          className={`flex flex-col gap-4 ${displayTickets.length && "sm:grid sm:flex-none sm:grid-cols-2"}`}
+        >
+          {displayTickets.length ? (
+            displayTickets.map((ticket) => (
+              <TicketListItem
+                key={ticket.id}
+                ticket={ticket}
+                onAddToCart={onAddToCart}
+              />
+            ))
+          ) : (
+            <div className="mt-8 text-center text-muted-foreground">
+              No tickets available.
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

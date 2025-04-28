@@ -72,8 +72,6 @@ export default function CartSheet() {
       const lineItems = items.map((item) => {
         return {
           ...item,
-          priceId: item.stripe_price_id,
-          quantity: item.quantity * item.cartQuantity,
         };
       });
 
@@ -215,7 +213,7 @@ export default function CartSheet() {
               ))}
             </div>
 
-            <SheetFooter className="flex flex-col gap-2 px-4 pt-4">
+            <SheetFooter className="flex flex-col gap-2 px-4 pt-4 sm:flex-col sm:justify-center sm:space-x-0">
               {error && (
                 <span className="mb-2 text-center text-sm font-medium text-destructive">
                   {error}
