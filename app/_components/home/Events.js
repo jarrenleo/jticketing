@@ -30,24 +30,14 @@ export default function Events({ events }) {
         animate="visible"
         variants={{
           hidden: { opacity: 0, filter: "blur-sm" },
-          visible: { opacity: 1, filter: "blur-none" },
+          visible: { opacity: 1 },
         }}
       >
         <h2 className="mb-4 text-xl font-bold">Events</h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {displayedEvents.map((event) => (
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0, filter: "blur-sm" },
-                visible: { opacity: 1, filter: "blur-none" },
-              }}
-              key={event.slug}
-            >
-              <EventCard event={event} />
-            </motion.div>
+            <EventCard key={event.slug} event={event} />
           ))}
         </div>
 

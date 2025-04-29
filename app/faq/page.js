@@ -1,14 +1,13 @@
 import Link from "next/link";
+import Navigation from "../_components/navigation/Navigation";
+import Footer from "../_components/footer/Footer";
+import WhatsApp from "../_components/icons/WhatsApp";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../_components/ui/Accordion";
-import { Button } from "../_components/ui/Button";
-import Navigation from "../_components/navigation/Navigation";
-import Footer from "../_components/footer/Footer";
-import WhatsApp from "../_components/icons/WhatsApp";
 import { Mail } from "lucide-react";
 
 const faqItems = [

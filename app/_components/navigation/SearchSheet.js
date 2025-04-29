@@ -11,8 +11,8 @@ import {
   SheetClose,
 } from "../ui/Sheet";
 import { Input } from "../ui/Input";
-import { Search } from "lucide-react";
 import { retrieveImageUrl } from "@/app/_lib/utils";
+import { Search } from "lucide-react";
 
 export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,14 +53,15 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
               autoFocus
             />
           </div>
+
           {searchTerm && (
             <div>
-              {searchResults.length > 0 ? (
-                <div className="space-y-2">
-                  <p className="mb-4 px-4 text-sm font-normal text-muted-foreground">
+              {searchResults.length ? (
+                <>
+                  <p className="mb-2 px-4 text-sm text-muted-foreground">
                     {`${searchResults.length} ${searchResults.length === 1 ? "result" : "results"} found`}
                   </p>
-                  <ul className="divide-border">
+                  <ul>
                     {searchResults.map((event) => (
                       <li key={event.slug}>
                         <SheetClose asChild>
@@ -68,7 +69,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                             href={`/tickets/${event.slug}`}
                             className="flex items-center gap-4 p-4 transition-colors hover:bg-accent"
                           >
-                            <div className="relative h-12 w-[91px] overflow-hidden rounded-md">
+                            <div className="relative h-12 w-[110.4px] overflow-hidden rounded-md">
                               <Image
                                 src={retrieveImageUrl(
                                   "events",
@@ -79,22 +80,22 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                                 className="object-cover"
                               />
                             </div>
-                            <div className="flex flex-col">
-                              <span className="line-clamp-1 text-sm font-semibold">
+                            <div>
+                              <p className="line-clamp-1 text-sm font-semibold">
                                 {event.artist}
-                              </span>
-                              <span className="line-clamp-1 text-sm text-muted-foreground">
+                              </p>
+                              <p className="line-clamp-1 text-sm text-muted-foreground">
                                 {event.title}
-                              </span>
+                              </p>
                             </div>
                           </Link>
                         </SheetClose>
                       </li>
                     ))}
                   </ul>
-                </div>
+                </>
               ) : (
-                <p className="py-8 text-center text-muted-foreground">
+                <p className="mt-8 text-center text-muted-foreground">
                   No results found.
                 </p>
               )}

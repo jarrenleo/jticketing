@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useCart } from "@/app/_contexts/CartContext";
 import Image from "next/image";
 import Link from "next/link";
-import { useCart } from "../../_contexts/CartContext";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Sheet,
@@ -35,16 +35,17 @@ export default function CartSheet() {
   } = useCart();
 
   useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => setError(""), 5000);
-      return () => clearTimeout(timer);
-    }
+    if (!error) return;
+
+    const timer = setTimeout(() => setError(""), 5000);
+    return () => clearTimeout(timer);
   }, [error]);
 
   async function checkTicketsAvailability() {
     for (const item of items) {
       const { tickets_available } = await checkTicketAvailability(
         item.id,
+        item.price,
         item.cartQuantity,
       );
       if (!tickets_available) return false;
@@ -134,7 +135,7 @@ export default function CartSheet() {
               {items.map((item) => (
                 <div key={item.id} className="flex flex-col gap-0.5">
                   <div className="mb-2 flex items-center gap-4">
-                    <div className="relative h-12 w-[91px] flex-shrink-0 overflow-hidden rounded-md">
+                    <div className="relative h-12 w-[110.4px] flex-shrink-0 overflow-hidden rounded-md">
                       <Image
                         src={retrieveImageUrl("events", item.image_file)}
                         alt={item.artist}

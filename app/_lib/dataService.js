@@ -41,9 +41,10 @@ export async function getEventTickets(slug) {
   return data;
 }
 
-export async function checkTicketAvailability(id, num_sets) {
+export async function checkTicketAvailability(id, price, num_sets) {
   const { data, error } = await supabase.rpc("check_ticket_availability", {
     p_id: id,
+    p_price: price,
     p_num_sets: num_sets,
   });
 

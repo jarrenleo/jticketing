@@ -61,7 +61,7 @@ export default function Tickets({ ticketsData, eventData }) {
       animate="visible"
       variants={{
         hidden: { opacity: 0, filter: "blur-sm" },
-        visible: { opacity: 1, filter: "blur-none" },
+        visible: { opacity: 1 },
       }}
     >
       <div className="container mx-auto px-4 py-8">

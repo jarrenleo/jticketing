@@ -10,11 +10,15 @@ export default function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
+  function handleThemeToggle() {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }
+
   if (!mounted) return null;
 
   return (
     <button
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={handleThemeToggle}
       className="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
       aria-label="Theme toggle button"
     >

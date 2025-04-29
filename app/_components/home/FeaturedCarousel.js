@@ -20,7 +20,7 @@ export default function FeaturedCarousel({ events }) {
       animate="visible"
       variants={{
         hidden: { opacity: 0, filter: "blur-sm" },
-        visible: { opacity: 1, filter: "blur-none" },
+        visible: { opacity: 1 },
       }}
     >
       <Carousel
@@ -37,7 +37,7 @@ export default function FeaturedCarousel({ events }) {
         }}
         className="mb-8"
       >
-        <CarouselContent className="h-48 sm:h-[257.68px] md:h-[313.33px] lg:h-[424.64px] xl:h-[535.94px] 2xl:h-[653.91px]">
+        <CarouselContent className="h-[196.81px] sm:h-[257.68px] md:h-[313.33px] lg:h-[424.64px] xl:h-[535.94px] 2xl:h-[653.91px]">
           {events.map((event, index) => (
             <CarouselItem key={index} className="group">
               <Link href={`/tickets/${event.slug}`}>
@@ -46,6 +46,8 @@ export default function FeaturedCarousel({ events }) {
                     src={retrieveImageUrl("events", event.image_file)}
                     alt={`${event.artist} event`}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority
                     className="rounded-md object-cover"
                   />
                   <div className="absolute inset-0 flex flex-col justify-end rounded-md bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-8 lg:p-12">

@@ -8,13 +8,11 @@ export default function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Load cart from localStorage on initial render
   useEffect(() => {
     const savedCart = localStorage.getItem("ticketCart");
     if (savedCart) setItems(JSON.parse(savedCart));
   }, []);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("ticketCart", JSON.stringify(items));
   }, [items]);
@@ -59,8 +57,8 @@ export default function CartProvider({ children }) {
     );
   }
 
-  function clearCart() {
-    setItems([]);
+  function getTotalItems() {
+    return items.length;
   }
 
   function getTotalPrice() {
@@ -70,8 +68,8 @@ export default function CartProvider({ children }) {
     );
   }
 
-  function getTotalItems() {
-    return items.length;
+  function clearCart() {
+    setItems([]);
   }
 
   function openCart() {
@@ -93,9 +91,9 @@ export default function CartProvider({ children }) {
         addItem,
         removeItem,
         updateQuantity,
-        clearCart,
-        getTotalPrice,
         getTotalItems,
+        getTotalPrice,
+        clearCart,
         isCartOpen,
         openCart,
         closeCart,

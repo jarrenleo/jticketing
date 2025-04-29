@@ -1,8 +1,9 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import Stripe from "stripe";
 import Navigation from "@/app/_components/navigation/Navigation";
 import Footer from "@/app/_components/footer/Footer";
+import ClearCartOnSuccess from "@/app/_components/navigation/ClearCartOnSuccess";
 import { Button } from "@/app/_components/ui/Button";
 import {
   Card,
@@ -13,20 +14,15 @@ import {
   CardTitle,
 } from "@/app/_components/ui/Card";
 import { Separator } from "@/app/_components/ui/Separator";
-import { formatDateTime } from "@/app/_lib/utils";
-import ClearCartOnSuccess from "@/app/_components/navigation/ClearCartOnSuccess";
 import { updateTicketInventory } from "@/app/_lib/dataService";
+import { formatDateTime } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export const metadata = {
-  title: "Jticketing | Order Confirmed",
-};
-
 function formatPaymentMethod(session) {
-  const paymentMethod = session.payment_intent.payment_method;
+  const paymentMethod = session.payment_intent?.payment_method;
 
-  if (paymentMethod.card)
+  if (paymentMethod?.card)
     return `${paymentMethod.card.brand.charAt(0).toUpperCase() + paymentMethod.card.brand.slice(1)} ${paymentMethod.card.funding} (•••• ${paymentMethod.card.last4})`;
 
   return "N/A";
@@ -79,12 +75,13 @@ export default async function SuccessPage({ searchParams }) {
   const customerName = session.custom_fields.find(
     (f) => f.key === "customer_name",
   ).text.value;
-  const customerEmail = session.customer_details.email;
+  const orderId = session.payment_intent?.id.slice(3, -1) || "N/A";
   const orderDate = formatDateTime(new Date(session.created * 1000));
   const paymentMethod = formatPaymentMethod(session);
   const currency = session.currency.toUpperCase();
   const totalAmount = session.amount_total / 100;
   const lineItems = session.line_items.data;
+  const customerEmail = session.customer_details.email;
 
   return (
     <div className="container mx-auto flex min-h-screen flex-col">
@@ -106,7 +103,7 @@ export default async function SuccessPage({ searchParams }) {
             <div className="grid gap-4 text-sm font-medium md:grid-cols-2">
               <div className="space-y-0.5">
                 <p className="text-muted-foreground">Order Number</p>
-                <p>{session.payment_intent.id.slice(3, -1)}</p>
+                <p>{orderId}</p>
               </div>
 
               <div className="space-y-0.5">

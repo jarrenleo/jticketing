@@ -13,7 +13,7 @@ export const metadata = {
   description:
     "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
   openGraph: {
-    images: ["./icon.png"],
+    images: ["/logo.png"],
   },
 };
 

@@ -200,6 +200,8 @@ export default function SeatMap({ event }) {
             src={retrieveImageUrl("seatmaps", event.seatmap_file)}
             alt={`${event.title} Seat Map`}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority
             className="object-contain"
           />
         </div>

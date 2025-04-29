@@ -6,11 +6,12 @@ import { formatDateTime, retrieveImageUrl } from "../../_lib/utils";
 export default function EventCard({ event }) {
   return (
     <Link href={`/tickets/${event.slug}`} className="group">
-      <div className="relative h-48 overflow-hidden rounded-md sm:h-40">
+      <div className="relative h-[196.81px] w-full overflow-hidden rounded-md sm:h-[125.36px] md:h-[153.19px] lg:h-[136.91px] xl:h-[128.77px] 2xl:h-[156.6px]">
         <Image
           src={retrieveImageUrl("events", event.image_file)}
           alt={`${event.artist} - ${event.title}`}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:duration-300 group-hover:ease-out"
         />
       </div>
