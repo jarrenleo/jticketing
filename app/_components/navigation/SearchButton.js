@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import SearchSheet from "./SearchSheet";
-import { Button } from "../ui/Button";
 import { Search } from "lucide-react";
 
-export default function SearchButton({ events }) {
+export default function SearchButton({ events, error }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
@@ -24,6 +23,7 @@ export default function SearchButton({ events }) {
         isSearchOpen={isSearchOpen}
         setIsSearchOpen={setIsSearchOpen}
         events={events}
+        error={error}
       />
     </>
   );

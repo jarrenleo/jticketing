@@ -14,12 +14,17 @@ import { Input } from "../ui/Input";
 import { retrieveImageUrl } from "@/app/_lib/utils";
 import { Search } from "lucide-react";
 
-export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
+export default function SearchSheet({
+  isSearchOpen,
+  setIsSearchOpen,
+  events,
+  error,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    if (!searchTerm) return;
+    if (!searchTerm || error) return;
 
     const results = events.filter(
       (event) =>
@@ -28,7 +33,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
     );
 
     setSearchResults(results);
-  }, [searchTerm, events]);
+  }, [searchTerm, events, error]);
 
   return (
     <Sheet open={isSearchOpen} onOpenChange={(open) => setIsSearchOpen(open)}>
@@ -54,7 +59,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
             />
           </div>
 
-          {searchTerm && (
+          {searchTerm && !error && (
             <div>
               {searchResults.length ? (
                 <>
