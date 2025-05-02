@@ -6,16 +6,25 @@ import { retrieveImageUrl } from "@/app/_lib/utils";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const eventData = await getEvent(slug);
+  const { data, error } = await getEvent(slug);
 
-  if (eventData)
+  if (!data || error)
     return {
-      title: `JTicketing | ${eventData.artist}`,
-      description: `Jticketing is a platform for securing the hottest tickets with ease and confidence. Secure tickets for ${eventData.artist} with us today.`,
+      title: "JTicketing",
+      description:
+        "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
       openGraph: {
-        images: [retrieveImageUrl("events", eventData.image_file)],
+        images: ["/logo.png"],
       },
     };
+
+  return {
+    title: `JTicketing | ${data.artist}`,
+    description: `Jticketing is a platform for securing the hottest tickets with ease and confidence. Secure tickets for ${data.artist} with us today.`,
+    openGraph: {
+      images: [retrieveImageUrl("events", data.image_file)],
+    },
+  };
 }
 
 export default async function TicketPage({ params }) {
