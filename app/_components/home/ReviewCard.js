@@ -1,4 +1,7 @@
 "use client";
+import Link from "next/link";
+import Facebook from "../icons/Facebook";
+import { Quote } from "lucide-react";
 
 export default function ReviewCard({ review }) {
   return (
