@@ -139,6 +139,7 @@ export default function CartSheet() {
                         src={retrieveImageUrl("events", item.image_file)}
                         alt={item.artist}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
                       />
                     </div>
