@@ -20,16 +20,33 @@ export async function generateMetadata({ params }) {
 
 export default async function TicketPage({ params }) {
   const { slug } = await params;
-  const [eventData, ticketsData] = await Promise.all([
-    getEvent(slug),
-    getEventTickets(slug),
-  ]);
+  const [
+    { data: eventData, error: eventError },
+    { data: ticketsData, error: ticketsError },
+  ] = await Promise.all([getEvent(slug), getEventTickets(slug)]);
+
+  if (eventError || ticketsError)
+    return (
+      <div className="container mx-auto flex min-h-screen flex-col">
+        <Navigation />
+        <div className="flex flex-1 flex-col items-center justify-center px-4">
+          <span className="mb-2 text-2xl font-bold text-foreground">
+            Server Error
+          </span>
+          <span className="mb-4 text-center text-muted-foreground">
+            {eventError || ticketsError}. Please refresh the page or try again
+            later.
+          </span>
+        </div>
+        <Footer />
+      </div>
+    );
 
   return (
     <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
       <main className="flex flex-1 flex-col">
-        <Tickets ticketsData={ticketsData} eventData={eventData} />
+        <Tickets eventData={eventData} ticketsData={ticketsData} />
       </main>
       <Footer />
     </div>

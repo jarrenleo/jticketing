@@ -43,26 +43,25 @@ export default function CartSheet() {
 
   async function checkTicketsAvailability() {
     for (const item of items) {
-      const { tickets_available } = await checkTicketAvailability(
+      const { tickets_available, error } = await checkTicketAvailability(
         item.id,
         item.price,
         item.cartQuantity,
       );
-      if (!tickets_available) return false;
+
+      if (error) throw Error(error);
+      if (!tickets_available)
+        throw Error(
+          "Certain items in cart are unavailable. Please remove them before proceeding to payment.",
+        );
     }
-    return true;
   }
 
   async function handleCheckout() {
     setIsLoading(true);
 
     try {
-      const isAvailable = await checkTicketsAvailability();
-
-      if (!isAvailable)
-        throw new Error(
-          "Certain items in cart are unavailable. Please remove them and try again.",
-        );
+      await checkTicketsAvailability();
 
       const stripe = await stripePromise;
       if (!stripe)

@@ -3,14 +3,9 @@ import supabase from "./supabase";
 export async function getEvents() {
   const { data, error } = await supabase.rpc("get_events");
 
-  // Change the way errors are handled
-  // Should send error message to the frontend
-  if (error) {
-    console.error("Error fetching event data:", error);
-    return [];
-  }
+  if (error) return { data: null, error: error.message };
 
-  return data;
+  return { data };
 }
 
 export async function getEvent(slug) {
@@ -18,14 +13,17 @@ export async function getEvent(slug) {
     p_slug: slug,
   });
 
-  if (error) {
-    console.error(`Error fetching event for slug "${slug}":`, error);
-    return null;
-  }
+  if (error) return { data: null, error: error.message };
 
-  if (!data) return null;
+  return { data: data[0] };
+}
 
-  return data[0];
+export async function getReviews() {
+  const { data, error } = await supabase.rpc("get_reviews");
+
+  if (error) return { data: null, error: error.message };
+
+  return { data };
 }
 
 export async function getEventTickets(slug) {
@@ -33,12 +31,9 @@ export async function getEventTickets(slug) {
     p_slug: slug,
   });
 
-  if (error) {
-    console.error(`Error fetching tickets for slug "${slug}":`, error);
-    return [];
-  }
+  if (error) return { data: null, error: error.message };
 
-  return data;
+  return { data };
 }
 
 export async function checkTicketAvailability(id, price, num_sets) {
@@ -48,17 +43,9 @@ export async function checkTicketAvailability(id, price, num_sets) {
     p_num_sets: num_sets,
   });
 
-  if (error) {
-    console.error(
-      `Error checking tickets availability for ticket ID ${id}:`,
-      error,
-    );
-    return null;
-  }
+  if (error) return { tickets_available: null, error: error.message };
 
-  if (!data) return null;
-
-  return data[0];
+  return { tickets_available: data[0] };
 }
 
 export async function updateTicketInventory(ticketId, quantityPurchased) {
@@ -67,13 +54,5 @@ export async function updateTicketInventory(ticketId, quantityPurchased) {
     p_quantity: quantityPurchased,
   });
 
-  if (error) {
-    console.error(
-      `Error updating inventory for ticket ID ${ticketId} by ${quantityPurchased}:`,
-      error,
-    );
-    return null;
-  }
-
-  return true;
+  if (error) return { error: error.message };
 }

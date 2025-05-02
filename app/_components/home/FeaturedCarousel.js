@@ -22,6 +22,7 @@ export default function FeaturedCarousel({ events }) {
         hidden: { opacity: 0, filter: "blur-sm" },
         visible: { opacity: 1 },
       }}
+      className="mb-8"
     >
       <Carousel
         plugins={[
@@ -35,9 +36,8 @@ export default function FeaturedCarousel({ events }) {
           loop: true,
           align: "start",
         }}
-        className="mb-8"
       >
-        <CarouselContent className="h-[196.81px] sm:h-[257.68px] md:h-[313.33px] lg:h-[424.64px] xl:h-[535.94px] 2xl:h-[653.91px]">
+        <CarouselContent className="h-[174.78px] sm:h-[257.68px] md:h-[313.33px] lg:h-[424.64px] xl:h-[535.94px] 2xl:h-[653.91px]">
           {events.map((event, index) => (
             <CarouselItem key={index} className="group">
               <Link href={`/tickets/${event.slug}`}>

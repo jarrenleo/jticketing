@@ -67,7 +67,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                         <SheetClose asChild>
                           <Link
                             href={`/tickets/${event.slug}`}
-                            className="flex items-center gap-4 p-4 transition-colors hover:bg-accent"
+                            className="group flex items-center gap-4 p-4 transition-colors hover:bg-accent"
                           >
                             <div className="relative h-12 w-[110.4px] overflow-hidden rounded-md">
                               <Image
@@ -81,7 +81,7 @@ export default function SearchSheet({ isSearchOpen, setIsSearchOpen, events }) {
                               />
                             </div>
                             <div>
-                              <p className="line-clamp-1 text-sm font-semibold">
+                              <p className="line-clamp-1 text-sm font-semibold group-hover:text-accent-foreground group-hover:transition-colors">
                                 {event.artist}
                               </p>
                               <p className="line-clamp-1 text-sm text-muted-foreground">

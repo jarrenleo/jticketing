@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/app/_components/ui/Card";
 import { Separator } from "@/app/_components/ui/Separator";
-import { updateTicketInventory } from "@/app/_lib/dataService";
 import { formatDateTime } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -43,34 +42,23 @@ export default async function SuccessPage({ searchParams }) {
 
   if (!session)
     return (
-      <div className="container mx-auto max-w-3xl px-4 py-12 text-center">
-        <h1 className="mb-4 text-2xl font-bold text-destructive">
-          Order Confirmation Error
-        </h1>
-        <p>
-          We could not verify your payment details or the session is invalid.
-        </p>
-        <p>
-          If payment was completed, please contact support
-          {session_id
-            ? ` with Session ID: ${session_id.substring(0, 10)}...`
-            : "."}
-        </p>
-        <Link href="/" className="mt-4 inline-block">
-          <Button variant="outline">Go to Homepage</Button>
-        </Link>
+      <div className="container mx-auto flex min-h-screen flex-col">
+        <Navigation />
+        <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-8">
+          <h1 className="text-3xl font-bold">Order Confirmation Error</h1>
+          <p className="text-center text-muted-foreground">
+            We could not verify your order. If payment was completed, please
+            contact our support team via WhatsApp or Email.
+          </p>
+          <Link href="/" className="inline-block">
+            <Button variant="outline" className="font-semibold">
+              Back to Home
+            </Button>
+          </Link>
+        </main>
+        <Footer />
       </div>
     );
-
-  const inventoryUpdates = session.line_items.data.map(async (item) => {
-    const ticketId = item.price.product.metadata.db_ticket_id;
-    const setOf = item.price.product.metadata.set_of;
-    const quantityPurchased = item.quantity / setOf;
-
-    await updateTicketInventory(ticketId, quantityPurchased);
-  });
-
-  await Promise.all(inventoryUpdates);
 
   const customerName = session.custom_fields.find(
     (f) => f.key === "customer_name",

@@ -19,13 +19,21 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={handleThemeToggle}
-      className="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
+      className="group cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
       aria-label="Theme toggle button"
     >
       {resolvedTheme === "dark" ? (
-        <Moon width={20} height={20} />
+        <Moon
+          width={20}
+          height={20}
+          className="group-hover:stroke-accent-foreground group-hover:transition-colors"
+        />
       ) : (
-        <Sun width={20} height={20} />
+        <Sun
+          width={20}
+          height={20}
+          className="group-hover:stroke-accent-foreground group-hover:transition-colors"
+        />
       )}
     </button>
   );

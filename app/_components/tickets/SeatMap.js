@@ -92,7 +92,7 @@ export default function SeatMap({ event }) {
 
   // --- Touch Event Handlers ---
   function handleTouchStart(e) {
-    e.preventDefault(); // Prevent default scroll/zoom behavior
+    e.preventDefault();
     e.stopPropagation();
 
     const touches = e.touches;
@@ -100,7 +100,7 @@ export default function SeatMap({ event }) {
     if (touches.length === 2) {
       const dist = getDistance(touches[0], touches[1]);
       setIsPinching(true);
-      setIsDragging(false); // Ensure dragging stops if pinching starts
+      setIsDragging(false);
       setPinchStartScale(scale);
       setTouchStartDistance(dist);
     } else if (touches.length === 1 && !isPinching) {

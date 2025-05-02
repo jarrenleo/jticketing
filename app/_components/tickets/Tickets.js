@@ -13,7 +13,7 @@ import EventCard from "./EventCard";
 import TicketList from "./TicketList";
 import SeatMap from "./SeatMap";
 
-export default function Tickets({ ticketsData, eventData }) {
+export default function Tickets({ eventData, ticketsData }) {
   const [viewportHeight, setViewportHeight] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [ticketScrollArea, setTicketScrollArea] = useState(0);
@@ -70,10 +70,13 @@ export default function Tickets({ ticketsData, eventData }) {
             <EventCard event={eventData} />
             <Tabs defaultValue="ticket_listing">
               <TabsList className="mb-2 w-full">
-                <TabsTrigger value="ticket_listing" className="w-full">
+                <TabsTrigger
+                  value="ticket_listing"
+                  className="w-full font-semibold"
+                >
                   Tickets
                 </TabsTrigger>
-                <TabsTrigger value="seat_map" className="w-full">
+                <TabsTrigger value="seat_map" className="w-full font-semibold">
                   Seat Map
                 </TabsTrigger>
               </TabsList>

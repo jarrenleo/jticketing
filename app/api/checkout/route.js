@@ -5,6 +5,7 @@ import { formatDateTime } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const domain = process.env.NEXT_PUBLIC_BASE_URL;
+// const domain = "http://localhost:3000";
 
 export async function POST(request) {
   const { lineItems } = await request.json();
@@ -20,7 +21,7 @@ export async function POST(request) {
           images: [retrieveImageUrl("events", item.image_file)],
           metadata: {
             db_ticket_id: item.id,
-            set_of: item.quantity,
+            set_num: item.quantity,
           },
         },
         unit_amount: item.price * 100,

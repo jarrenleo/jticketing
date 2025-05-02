@@ -45,9 +45,15 @@ export default function FilterSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="flex items-center gap-1 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
-          <SlidersHorizontal width={14} height={14} />
-          <span>Filters</span>
+        <button className="group flex items-center gap-1 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
+          <SlidersHorizontal
+            width={14}
+            height={14}
+            className="group-hover:stroke-accent-foreground"
+          />
+          <span className="font-medium group-hover:text-accent-foreground group-hover:transition-colors">
+            Filters
+          </span>
         </button>
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col px-0">

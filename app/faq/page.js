@@ -69,20 +69,32 @@ const faqItems = [
             href="https://wa.me/601165324028"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+            className="group flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
           >
-            <WhatsApp height={16} width={16} className="fill-foreground" />
-            <span className="text-foreground">WhatsApp</span>
+            <WhatsApp
+              height={16}
+              width={16}
+              className="fill-foreground group-hover:fill-accent-foreground group-hover:transition-colors"
+            />
+            <span className="text-foreground group-hover:text-accent-foreground group-hover:transition-colors">
+              WhatsApp
+            </span>
           </Link>
 
           <Link
             href="mailto:jfaikicks@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+            className="group flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
           >
-            <Mail height={16} width={16} className="stroke-foreground" />
-            <span className="text-foreground">Email</span>
+            <Mail
+              height={16}
+              width={16}
+              className="stroke-foreground group-hover:stroke-accent-foreground group-hover:transition-colors"
+            />
+            <span className="text-foreground group-hover:text-accent-foreground group-hover:transition-colors">
+              Email
+            </span>
           </Link>
         </div>
       </>
