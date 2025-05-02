@@ -14,6 +14,10 @@ import { retrieveImageUrl } from "@/app/_lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 
 export default function FeaturedCarousel({ events }) {
+  let items = events;
+  const featuredEvents = events.filter((event) => event.is_featured);
+  if (featuredEvents.length) items = featuredEvents;
+
   return (
     <motion.div
       initial="hidden"
@@ -38,13 +42,13 @@ export default function FeaturedCarousel({ events }) {
         }}
       >
         <CarouselContent className="h-[174.78px] sm:h-[257.68px] md:h-[313.33px] lg:h-[424.64px] xl:h-[535.94px] 2xl:h-[653.91px]">
-          {events.map((event, index) => (
-            <CarouselItem key={index} className="group">
-              <Link href={`/tickets/${event.slug}`}>
+          {items.map((item) => (
+            <CarouselItem key={item.slug} className="group">
+              <Link href={`/tickets/${item.slug}`}>
                 <div className="relative h-full w-full">
                   <Image
-                    src={retrieveImageUrl("events", event.image_file)}
-                    alt={`${event.artist} event`}
+                    src={retrieveImageUrl("events", item.image_file)}
+                    alt={`${item.artist} event`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority
@@ -52,10 +56,10 @@ export default function FeaturedCarousel({ events }) {
                   />
                   <div className="absolute inset-0 flex flex-col justify-end rounded-md bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-8 lg:p-12">
                     <h3 className="font-bold text-white sm:text-lg">
-                      {event.artist}
+                      {item.artist}
                     </h3>
                     <p className="text-sm text-white sm:text-base">
-                      {event.title}
+                      {item.title}
                     </p>
                   </div>
                 </div>
