@@ -66,6 +66,7 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
 
     setDisplayTickets(filteredTickets);
   }, [
+    tickets,
     selectedDate,
     selectedQuantity,
     selectedCategory,
