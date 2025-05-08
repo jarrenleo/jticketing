@@ -1,6 +1,10 @@
 import Navigation from "../_components/navigation/Navigation";
 import Footer from "../_components/footer/Footer";
 
+export const metadata = {
+  title: "JTicketing | Privacy Policy",
+};
+
 export default function PrivacyPage() {
   return (
     <div className="container mx-auto flex min-h-screen flex-col">

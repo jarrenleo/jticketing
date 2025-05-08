@@ -19,8 +19,8 @@ export async function generateMetadata({ params }) {
     };
 
   return {
-    title: `JTicketing | ${data.artist}`,
-    description: `Jticketing is a platform for securing the hottest tickets with ease and confidence. Secure tickets for ${data.artist} with us today.`,
+    title: `JTicketing | ${data.artist} - ${data.title}`,
+    description: `Jticketing is a platform for securing the hottest tickets with ease and confidence. Secure tickets for ${data.artist} - ${data.title} with us today.`,
     openGraph: {
       images: [retrieveImageUrl("events", data.image_file)],
     },

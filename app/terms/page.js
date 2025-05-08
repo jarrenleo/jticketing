@@ -1,6 +1,10 @@
 import Navigation from "../_components/navigation/Navigation";
 import Footer from "../_components/footer/Footer";
 
+export const metadata = {
+  title: "JTicketing | Terms and Conditions",
+};
+
 export default function TermsPage() {
   return (
     <div className="container mx-auto flex min-h-screen flex-col">

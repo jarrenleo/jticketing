@@ -59,8 +59,14 @@ export default function SearchSheet({
             />
           </div>
 
+          {error && (
+            <p className="mt-4 px-4 text-center text-destructive">
+              Something went wrong. Please refresh the page or try again later.
+            </p>
+          )}
+
           {searchTerm && !error && (
-            <div>
+            <>
               {searchResults.length ? (
                 <>
                   <p className="mb-2 px-4 text-sm text-muted-foreground">
@@ -80,7 +86,7 @@ export default function SearchSheet({
                                   "events",
                                   event.image_file,
                                 )}
-                                alt={event.artist}
+                                alt={`${event.artist} - ${event.title} event poster`}
                                 fill
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="object-cover"
@@ -101,11 +107,11 @@ export default function SearchSheet({
                   </ul>
                 </>
               ) : (
-                <p className="mt-8 text-center text-muted-foreground">
+                <p className="mt-4 text-center text-muted-foreground">
                   No results found.
                 </p>
               )}
-            </div>
+            </>
           )}
         </div>
       </SheetContent>

@@ -26,7 +26,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
         <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">
           {quantity > 1 ? `Set of ${quantity}` : "Single"}
         </span>
-        <span className="text-sm text-primary">{num_sets} sets available</span>
+        <span className="text-sm text-primary">{`${num_sets} set${num_sets > 1 ? "s" : ""} available`}</span>
       </div>
 
       <span className="mb-4 text-sm text-muted-foreground">

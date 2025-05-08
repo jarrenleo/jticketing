@@ -7,10 +7,9 @@ export default function EventCard({ event }) {
       <div className="relative h-48 w-full overflow-hidden rounded-md sm:h-24 sm:w-[220.8px]">
         <Image
           src={retrieveImageUrl("events", event.image_file)}
-          alt={`${event.artist} - ${event.title}`}
+          alt={`${event.artist} - ${event.title} event poster`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          priority
           className="object-cover"
         />
       </div>

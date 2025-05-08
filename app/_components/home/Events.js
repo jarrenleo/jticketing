@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
 import EventCard from "./EventCard";
 import { Button } from "@/app/_components/ui/Button";
 
@@ -25,30 +24,12 @@ export default function Events({ events }) {
   }
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0, filter: "blur-sm" },
-        visible: { opacity: 1 },
-      }}
-      className="mb-8"
-    >
+    <div className="mb-8">
       <h2 className="mb-4 text-xl font-bold">Events</h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {displayedEvents.map((event) => (
-          <motion.div
-            key={event.slug}
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0, filter: "blur-sm" },
-              visible: { opacity: 1 },
-            }}
-          >
-            <EventCard event={event} />
-          </motion.div>
+          <EventCard key={event.slug} event={event} />
         ))}
       </div>
 
@@ -63,6 +44,6 @@ export default function Events({ events }) {
           </Button>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

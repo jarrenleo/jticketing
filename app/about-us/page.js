@@ -7,6 +7,10 @@ import Instagram from "../_components/icons/Instagram";
 import XiaoHongShu from "../_components/icons/XiaoHongShu";
 import { ShoppingBag, ExternalLink } from "lucide-react";
 
+export const metadata = {
+  title: "JTicketing | About Us",
+};
+
 export default function AboutPage() {
   return (
     <div className="container mx-auto flex min-h-screen flex-col">

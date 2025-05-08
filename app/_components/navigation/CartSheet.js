@@ -22,6 +22,27 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
 );
 
+async function checkTicketsAvailability(items) {
+  try {
+    const ticketAvailabilityChecks = items.map(
+      async (item) =>
+        await checkTicketAvailability(item.id, item.price, item.cartQuantity),
+    );
+    const results = await Promise.all(ticketAvailabilityChecks);
+
+    const allTicketsAvailable = results.every(
+      (result) => result.data.ticket_availability,
+    );
+
+    if (!allTicketsAvailable)
+      throw new Error(
+        "Certain items in cart are unavailable. Please remove them before proceeding to payment.",
+      );
+  } catch (error) {
+    throw Error(error.message);
+  }
+}
+
 export default function CartSheet() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -37,31 +58,15 @@ export default function CartSheet() {
   useEffect(() => {
     if (!error) return;
 
-    const timer = setTimeout(() => setError(""), 5000);
+    const timer = setTimeout(() => setError(""), 10000);
     return () => clearTimeout(timer);
   }, [error]);
 
-  async function checkTicketsAvailability() {
-    for (const item of items) {
-      const { tickets_available, error } = await checkTicketAvailability(
-        item.id,
-        item.price,
-        item.cartQuantity,
-      );
-
-      if (error) throw Error(error);
-      if (!tickets_available)
-        throw Error(
-          "Certain items in cart are unavailable. Please remove them before proceeding to payment.",
-        );
-    }
-  }
-
   async function handleCheckout() {
-    setIsLoading(true);
-
     try {
-      await checkTicketsAvailability();
+      setIsLoading(true);
+
+      await checkTicketsAvailability(items);
 
       const stripe = await stripePromise;
       if (!stripe)
@@ -107,6 +112,7 @@ export default function CartSheet() {
       setError(
         error instanceof Error ? error.message : "An unknown error occurred.",
       );
+    } finally {
       setIsLoading(false);
     }
   }
@@ -137,7 +143,7 @@ export default function CartSheet() {
                     <div className="relative h-12 w-[110.4px] flex-shrink-0 overflow-hidden rounded-md">
                       <Image
                         src={retrieveImageUrl("events", item.image_file)}
-                        alt={item.artist}
+                        alt={`${item.artist} - ${item.title} event poster`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
@@ -153,10 +159,12 @@ export default function CartSheet() {
                       </span>
                     </div>
                   </div>
+
                   <div className="flex justify-between font-semibold">
                     <span className="line-clamp-1">{item.category}</span>
                     <span>RM {item.price * item.quantity}</span>
                   </div>
+
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span>
                       Section {item.section}, Row {item.row}
@@ -214,7 +222,7 @@ export default function CartSheet() {
               ))}
             </div>
 
-            <SheetFooter className="flex flex-col gap-2 px-4 pt-4 sm:flex-col sm:justify-center sm:space-x-0">
+            <SheetFooter className="flex flex-col gap-2 px-4 sm:flex-col sm:justify-center sm:space-x-0">
               {error && (
                 <span className="mb-2 text-center text-sm font-medium text-destructive">
                   {error}
@@ -253,7 +261,7 @@ export default function CartSheet() {
             </div>
           </>
         ) : (
-          <div className="flex flex-grow flex-col items-center justify-between px-4">
+          <div className="flex flex-1 flex-col items-center justify-between px-4">
             <div className="flex flex-grow items-center justify-center">
               <span className="mb-4 text-muted-foreground">
                 Your cart is empty.

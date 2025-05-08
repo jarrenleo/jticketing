@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import { retrieveImageUrl } from "@/app/_lib/utils";
 
-// Helper function to calculate distance between two points
 function getDistance(touch1, touch2) {
   const dx = touch1.clientX - touch2.clientX;
   const dy = touch1.clientY - touch2.clientY;
@@ -17,12 +16,10 @@ export default function SeatMap({ event }) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const containerRef = useRef(null);
-
-  // State for pinch-to-zoom
   const [isPinching, setIsPinching] = useState(false);
   const [pinchStartScale, setPinchStartScale] = useState(1);
   const [touchStartDistance, setTouchStartDistance] = useState(0);
+  const containerRef = useRef(null);
 
   function zoomIn() {
     setScale((prev) => Math.min(prev + 0.25, 3));
@@ -37,14 +34,12 @@ export default function SeatMap({ event }) {
     setPosition({ x: 0, y: 0 });
   }
 
-  // --- Mouse Event Handlers ---
   function handleMouseDown(e) {
-    // Prevent default only if not clicking buttons inside
     if (e.target === containerRef.current || e.target.tagName === "IMG") {
       e.preventDefault();
       e.stopPropagation();
 
-      if (isPinching) return; // Don't drag if pinching
+      if (isPinching) return;
 
       setIsDragging(true);
       setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
@@ -64,7 +59,6 @@ export default function SeatMap({ event }) {
   }
 
   function handleMouseUp(e) {
-    // Only stop dragging if initiated
     if (isDragging) {
       e.preventDefault();
       e.stopPropagation();
@@ -73,7 +67,6 @@ export default function SeatMap({ event }) {
   }
 
   function handleMouseLeave(e) {
-    // Only stop dragging if initiated
     if (isDragging) {
       e.preventDefault();
       e.stopPropagation();
@@ -90,7 +83,6 @@ export default function SeatMap({ event }) {
     setScale(clampedScale);
   }
 
-  // --- Touch Event Handlers ---
   function handleTouchStart(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -198,10 +190,9 @@ export default function SeatMap({ event }) {
         >
           <Image
             src={retrieveImageUrl("seatmaps", event.seatmap_file)}
-            alt={`${event.title} Seat Map`}
+            alt={`${event.artist} - ${event.title} seat map`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority
             className="object-contain"
           />
         </div>

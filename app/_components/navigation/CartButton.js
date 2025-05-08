@@ -7,6 +7,8 @@ import { ShoppingCart } from "lucide-react";
 export default function CartButton() {
   const { getTotalItems, toggleCart } = useCart();
 
+  const totalItems = getTotalItems();
+
   return (
     <>
       <button
@@ -18,9 +20,9 @@ export default function CartButton() {
           height={20}
           className="group-hover:stroke-accent-foreground group-hover:transition-colors"
         />
-        {getTotalItems() > 0 && (
+        {totalItems > 0 && (
           <div className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-            {getTotalItems()}
+            {totalItems}
           </div>
         )}
       </button>

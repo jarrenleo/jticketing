@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
@@ -13,21 +12,13 @@ import {
 import { retrieveImageUrl } from "@/app/_lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 
-export default function FeaturedCarousel({ events }) {
+export default function FeaturedEvents({ events }) {
   let items = events;
   const featuredEvents = events.filter((event) => event.is_featured);
   if (featuredEvents.length) items = featuredEvents;
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0, filter: "blur-sm" },
-        visible: { opacity: 1 },
-      }}
-      className="mb-8"
-    >
+    <div className="mb-8">
       <Carousel
         plugins={[
           Autoplay({
@@ -48,10 +39,9 @@ export default function FeaturedCarousel({ events }) {
                 <div className="relative h-full w-full">
                   <Image
                     src={retrieveImageUrl("events", item.image_file)}
-                    alt={`${item.artist} event`}
+                    alt={`${item.artist} - ${item.title} event poster`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority
                     className="rounded-md object-cover"
                   />
                   <div className="absolute inset-0 flex flex-col justify-end rounded-md bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-8 lg:p-12">
@@ -70,6 +60,6 @@ export default function FeaturedCarousel({ events }) {
         <CarouselPrevious className="hidden border-none bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-accent sm:flex sm:items-center" />
         <CarouselNext className="hidden border-none bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-accent sm:flex sm:items-center" />
       </Carousel>
-    </motion.div>
+    </div>
   );
 }

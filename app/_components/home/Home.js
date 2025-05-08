@@ -1,5 +1,5 @@
 import Link from "next/link";
-import FeaturedCarousel from "./FeaturedCarousel";
+import FeaturedEvents from "./FeaturedEvents";
 import Events from "./Events";
 import Reviews from "./Reviews";
 import { getEvents, getReviews } from "@/app/_lib/dataService";
@@ -10,8 +10,8 @@ import XiaoHongShu from "../icons/XiaoHongShu";
 export default async function Main() {
   try {
     const [
-      { data: events, error: eventsError },
-      { data: reviews, error: reviewsError },
+      { data: eventsData, error: eventsError },
+      { data: reviewsData, error: reviewsError },
     ] = await Promise.all([getEvents(), getReviews()]);
 
     if (eventsError || reviewsError)
@@ -27,19 +27,15 @@ export default async function Main() {
         </div>
       );
 
-    const ticketsAvailableEvents = events.filter(
-      (event) => event.tickets_available,
-    );
-
-    if (!ticketsAvailableEvents.length)
+    if (!eventsData.length)
       return (
         <div className="flex flex-1 flex-col items-center justify-center px-4">
           <span className="mb-2 text-2xl font-bold text-foreground">
-            We are sold out
+            We are sold out.
           </span>
 
           <span className="mb-4 text-muted-foreground">
-            Please follow our social media for updates
+            Please follow our social media for updates.
           </span>
 
           <div className="flex items-center gap-4">
@@ -80,15 +76,15 @@ export default async function Main() {
         </div>
       );
 
-    const sortedEvents = ticketsAvailableEvents.sort(
+    const sortedEvents = eventsData.sort(
       (a, b) => new Date(a.opening_date) - new Date(b.opening_date),
     );
 
     return (
       <div className="px-4 py-8">
-        <FeaturedCarousel events={sortedEvents} />
+        <FeaturedEvents events={sortedEvents} />
         <Events events={sortedEvents} />
-        <Reviews reviews={reviews} />
+        <Reviews reviews={reviewsData} />
       </div>
     );
   } catch (error) {}

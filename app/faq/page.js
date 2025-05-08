@@ -10,6 +10,10 @@ import {
 } from "../_components/ui/Accordion";
 import { Mail } from "lucide-react";
 
+export const metadata = {
+  title: "JTicketing | FAQ",
+};
+
 const faqItems = [
   {
     question: "How do I purchase tickets on JTicketing.com?",

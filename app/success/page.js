@@ -1,12 +1,26 @@
 import Link from "next/link";
 import Stripe from "stripe";
 import Navigation from "@/app/_components/navigation/Navigation";
-import Success from "@/app/_components/success/Success";
+import SuccessCard from "@/app/_components/success/SuccessCard";
 import Footer from "@/app/_components/footer/Footer";
-import ClearCartOnSuccess from "@/app/_components/navigation/ClearCartOnSuccess";
+import ClearCart from "@/app/_components/navigation/ClearCart";
 import { Button } from "@/app/_components/ui/Button";
+import { formatDateTime } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export const metadata = {
+  title: "JTicketing | Order Confirmation",
+};
+
+function formatPaymentMethod(session) {
+  const paymentMethod = session.payment_intent?.payment_method;
+
+  if (paymentMethod?.card)
+    return `${paymentMethod.card.brand.charAt(0).toUpperCase() + paymentMethod.card.brand.slice(1)} ${paymentMethod.card.funding} (•••• ${paymentMethod.card.last4})`;
+
+  return "N/A";
+}
 
 export default async function SuccessPage({ searchParams }) {
   const { session_id } = await searchParams;
@@ -41,14 +55,36 @@ export default async function SuccessPage({ searchParams }) {
       </div>
     );
 
+  const customerName = session.custom_fields.find(
+    (f) => f.key === "customer_name",
+  ).text.value;
+  const orderId = session.payment_intent?.id.slice(3, -1) || "N/A";
+  const orderDate = formatDateTime(new Date(session.created * 1000));
+  const paymentMethod = formatPaymentMethod(session);
+  const currency = session.currency.toUpperCase();
+  const totalAmount = session.amount_total / 100;
+  const lineItems = session.line_items.data;
+  const customerEmail = session.customer_details.email;
+
+  const checkoutDetails = {
+    customerName,
+    orderId,
+    orderDate,
+    paymentMethod,
+    currency,
+    totalAmount,
+    lineItems,
+    customerEmail,
+  };
+
   return (
     <div className="container mx-auto flex min-h-screen flex-col">
       <Navigation />
       <main className="flex flex-1 flex-col items-center px-4 py-8">
-        <Success session={session} />
+        <SuccessCard checkoutDetails={checkoutDetails} />
       </main>
       <Footer />
-      <ClearCartOnSuccess />
+      <ClearCart />
     </div>
   );
 }

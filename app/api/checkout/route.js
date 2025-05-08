@@ -33,13 +33,16 @@ export async function POST(request) {
       custom_fields: [
         {
           key: "customer_name",
-          label: { type: "custom", custom: "Customer Name" },
+          label: { type: "custom", custom: "Customer name" },
           type: "text",
           optional: false,
         },
       ],
       phone_number_collection: { enabled: true },
       mode: "payment",
+      payment_intent_data: {
+        capture_method: "manual",
+      },
       success_url: `${domain}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: domain,
     });

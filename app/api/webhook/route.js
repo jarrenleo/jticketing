@@ -1,7 +1,10 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { updateTicketInventory } from "@/app/_lib/dataService";
+import {
+  checkTicketAvailability,
+  updateTicketInventory,
+} from "@/app/_lib/dataService";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -23,9 +26,8 @@ export async function POST(request) {
 
   switch (event.type) {
     case "checkout.session.completed":
-      const session = event.data.object;
-
       try {
+        const session = event.data.object;
         const lineItems = await stripe.checkout.sessions.listLineItems(
           session.id,
           {
@@ -33,16 +35,43 @@ export async function POST(request) {
           },
         );
 
-        const inventoryUpdates = lineItems.data.map(async (item) => {
+        const ticketAvailabilityChecks = lineItems.data.map(async (item) => {
           const metadata = item.price.product.metadata;
-          const ticketId = metadata.db_ticket_id;
+
+          const ticketId = +metadata.db_ticket_id;
+          const price = item.amount_total / 100 / item.quantity;
           const setNum = +metadata.set_num;
           const quantityPurchased = item.quantity / setNum;
 
-          await updateTicketInventory(ticketId, quantityPurchased);
+          return await checkTicketAvailability(
+            ticketId,
+            price,
+            quantityPurchased,
+          );
         });
+        const results = await Promise.all(ticketAvailabilityChecks);
 
+        const allTicketsAvailable = results.every(
+          (result) => result.data.ticket_availability,
+        );
+
+        if (!allTicketsAvailable) {
+          await stripe.paymentIntents.cancel(session.payment_intent);
+          break;
+        }
+
+        const inventoryUpdates = lineItems.data.map(async (item) => {
+          const metadata = item.price.product.metadata;
+
+          const ticketId = +metadata.db_ticket_id;
+          const setNum = +metadata.set_num;
+          const quantityPurchased = item.quantity / setNum;
+
+          return await updateTicketInventory(ticketId, quantityPurchased);
+        });
         await Promise.all(inventoryUpdates);
+
+        await stripe.paymentIntents.capture(session.payment_intent);
       } catch (error) {
         return NextResponse.json(
           { error: "Failed to process payment completion event." },
@@ -51,7 +80,10 @@ export async function POST(request) {
       }
       break;
     default:
-      console.log(`Unhandled event type: ${event.type}`);
+      return NextResponse.json(
+        { error: `Unhandled event type: ${event.type}` },
+        { status: 400 },
+      );
   }
 
   return NextResponse.json({ received: true });

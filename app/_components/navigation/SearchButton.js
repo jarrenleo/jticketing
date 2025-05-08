@@ -1,11 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchSheet from "./SearchSheet";
 import { Search } from "lucide-react";
+import { getEvents } from "@/app/_lib/dataService";
 
-export default function SearchButton({ events, error }) {
+export default function SearchButton() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isSearchOpen) return;
+
+    (async function () {
+      const { data, error } = await getEvents();
+      if (error) {
+        setError(error);
+        return;
+      }
+
+      setEvents(data);
+    })();
+  }, [isSearchOpen]);
 
   return (
     <>

@@ -10,7 +10,6 @@ import WhatsApp from "../icons/WhatsApp";
 import Instagram from "../icons/Instagram";
 import XiaoHongShu from "../icons/XiaoHongShu";
 import { Mail } from "lucide-react";
-import { Button } from "../ui/Button";
 
 export default function Footer() {
   return (
