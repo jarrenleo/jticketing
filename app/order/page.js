@@ -10,7 +10,7 @@ import { formatDateTime } from "@/app/_lib/utils";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const metadata = {
-  title: "JTicketing | Order Status",
+  title: "JTicketing | Order Information",
   description:
     "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
   openGraph: {
