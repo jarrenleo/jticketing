@@ -47,7 +47,7 @@ export async function POST(request) {
       payment_intent_data: {
         capture_method: "manual",
       },
-      success_url: `${domain}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${domain}/order?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: domain,
     });
 

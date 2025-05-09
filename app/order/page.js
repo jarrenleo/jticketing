@@ -10,7 +10,7 @@ import { formatDateTime } from "@/app/_lib/utils";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const metadata = {
-  title: "JTicketing | Order Confirmation",
+  title: "JTicketing | Order Status",
   description:
     "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
   openGraph: {
@@ -29,26 +29,25 @@ function formatPaymentMethod(session) {
 
 export default async function SuccessPage({ searchParams }) {
   const { session_id } = await searchParams;
-  let session;
+  const session = await stripe.checkout.sessions.retrieve(session_id, {
+    expand: [
+      "customer",
+      "line_items.data.price.product",
+      "payment_intent.payment_method",
+    ],
+  });
 
-  if (session_id)
-    session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: [
-        "customer",
-        "line_items.data.price.product",
-        "payment_intent.payment_method",
-      ],
-    });
-
-  if (!session)
+  if (session.payment_intent.status !== "succeeded")
     return (
       <div className="container mx-auto flex min-h-screen flex-col">
         <Navigation />
         <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-8">
-          <h1 className="text-3xl font-bold">Order Confirmation Error</h1>
-          <p className="text-center text-muted-foreground">
-            We could not verify your order. If payment was completed, please
-            contact our support team via WhatsApp or Email.
+          <h1 className="text-3xl font-bold">Order Cancelled</h1>
+          <p className="mb-4 max-w-[600px] text-center text-muted-foreground">
+            Your order was cancelled because the tickets you selected were
+            purchased by another customer before your payment was processed,
+            resulting in insufficient available tickets to fulfill your order.
+            We are sorry for any inconvenience caused.
           </p>
           <Link href="/" className="inline-block">
             <Button variant="outline" className="font-semibold">
@@ -57,6 +56,7 @@ export default async function SuccessPage({ searchParams }) {
           </Link>
         </main>
         <Footer />
+        <ClearCart />
       </div>
     );
 
