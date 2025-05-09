@@ -30,7 +30,7 @@ export async function POST(request) {
 
     const session = await stripe.checkout.sessions.create({
       line_items: stripeLineItems,
-      currency: "myr",
+      adaptive_pricing: true,
       allow_promotion_codes: true,
       custom_fields: [
         {
