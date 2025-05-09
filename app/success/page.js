@@ -11,6 +11,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const metadata = {
   title: "JTicketing | Order Confirmation",
+  description:
+    "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
+  openGraph: {
+    images: ["/logo.png"],
+  },
 };
 
 function formatPaymentMethod(session) {

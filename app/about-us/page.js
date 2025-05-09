@@ -9,6 +9,11 @@ import { ShoppingBag, ExternalLink } from "lucide-react";
 
 export const metadata = {
   title: "JTicketing | About Us",
+  description:
+    "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
+  openGraph: {
+    images: ["/logo.png"],
+  },
 };
 
 export default function AboutPage() {

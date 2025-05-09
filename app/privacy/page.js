@@ -3,6 +3,11 @@ import Footer from "../_components/footer/Footer";
 
 export const metadata = {
   title: "JTicketing | Privacy Policy",
+  description:
+    "Jticketing is a platform for securing the hottest tickets with ease and confidence.",
+  openGraph: {
+    images: ["/logo.png"],
+  },
 };
 
 export default function PrivacyPage() {
