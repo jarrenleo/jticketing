@@ -19,11 +19,7 @@ export default function CartProvider({ children }) {
 
   function addItem(item) {
     const existingItemIndex = items.findIndex(
-      (cartItem) =>
-        cartItem.event === item.event &&
-        cartItem.section === item.section &&
-        cartItem.row === item.row &&
-        cartItem.datetime === item.datetime,
+      (cartItem) => cartItem.id === item.id,
     );
 
     if (existingItemIndex === -1) {
