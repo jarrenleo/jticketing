@@ -4,8 +4,8 @@ import { retrieveImageUrl } from "@/app/_lib/utils";
 import { formatDateTime } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const domain = process.env.NEXT_PUBLIC_BASE_URL;
-// const domain = "http://localhost:3000";
+// const domain = process.env.NEXT_PUBLIC_BASE_URL;
+const domain = "http://localhost:3000";
 
 export async function POST(request) {
   const { lineItems } = await request.json();
@@ -30,7 +30,9 @@ export async function POST(request) {
 
     const session = await stripe.checkout.sessions.create({
       line_items: stripeLineItems,
-      adaptive_pricing: true,
+      adaptive_pricing: {
+        enabled: true,
+      },
       allow_promotion_codes: true,
       custom_fields: [
         {
