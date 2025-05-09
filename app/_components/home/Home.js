@@ -7,6 +7,8 @@ import Facebook from "../icons/Facebook";
 import Instagram from "../icons/Instagram";
 import XiaoHongShu from "../icons/XiaoHongShu";
 
+export const fetchCache = "force-no-store";
+
 export default async function Main() {
   try {
     const [
