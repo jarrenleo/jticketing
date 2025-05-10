@@ -64,6 +64,8 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
         }
       });
 
+    filteredTickets = filteredTickets.filter((ticket) => ticket.num_sets > 0);
+
     setDisplayTickets(filteredTickets);
   }, [
     tickets,
