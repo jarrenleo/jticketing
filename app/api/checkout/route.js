@@ -30,10 +30,8 @@ export async function POST(request) {
 
     const session = await stripe.checkout.sessions.create({
       line_items: stripeLineItems,
-      adaptive_pricing: {
-        enabled: true,
-      },
       allow_promotion_codes: true,
+      phone_number_collection: { enabled: true },
       custom_fields: [
         {
           key: "customer_name",
@@ -42,11 +40,8 @@ export async function POST(request) {
           optional: false,
         },
       ],
-      phone_number_collection: { enabled: true },
       mode: "payment",
-      payment_intent_data: {
-        capture_method: "manual",
-      },
+      expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
       success_url: `${domain}/order?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: domain,
     });

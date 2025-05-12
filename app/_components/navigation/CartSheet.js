@@ -14,7 +14,10 @@ import {
   SheetClose,
 } from "../ui/Sheet";
 import Loader from "../ui/Loader";
-import { checkTicketAvailability } from "../../_lib/dataService";
+import {
+  checkTicketAvailability,
+  updateTicketInventory,
+} from "../../_lib/dataService";
 import { retrieveImageUrl, formatDateTime } from "../../_lib/utils";
 import { Plus, Minus, Trash2 } from "lucide-react";
 
@@ -36,7 +39,25 @@ async function checkTicketsAvailability(items) {
 
     if (!allTicketsAvailable)
       throw new Error(
-        "Certain items in cart are unavailable. Please remove them before proceeding to payment.",
+        "Certain items in cart are unavailable. Please remove them before proceeding to checkout.",
+      );
+  } catch (error) {
+    throw Error(error.message);
+  }
+}
+
+async function updateTicketsInventory(items) {
+  try {
+    const inventoryUpdates = items.map(
+      async (item) => await updateTicketInventory(item.id, item.cartQuantity),
+    );
+    const results = await Promise.all(inventoryUpdates);
+
+    const hasError = results.some((result) => result.error);
+
+    if (hasError)
+      throw new Error(
+        "Failed to reserve items in cart. Please try again in 30 minutes.",
       );
   } catch (error) {
     throw Error(error.message);
@@ -67,6 +88,7 @@ export default function CartSheet() {
       setIsLoading(true);
 
       await checkTicketsAvailability(items);
+      await updateTicketsInventory(items);
 
       const stripe = await stripePromise;
       if (!stripe)
@@ -74,18 +96,12 @@ export default function CartSheet() {
           "Stripe payment could not be loaded. Please try again later.",
         );
 
-      const lineItems = items.map((item) => {
-        return {
-          ...item,
-        };
-      });
-
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ lineItems }),
+        body: JSON.stringify({ items }),
       });
 
       if (!response.ok) {
