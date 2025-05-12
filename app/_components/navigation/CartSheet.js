@@ -50,11 +50,11 @@ async function updateTicketsInventory(items) {
   try {
     const inventoryUpdates = items.map(
       async (item) =>
-        await updateTicketInventory(+item.id, -1 * item.cartQuantity),
+        await updateTicketInventory(item.id, -1 * item.cartQuantity),
     );
     const results = await Promise.all(inventoryUpdates);
 
-    const hasError = results.some((result) => result.error);
+    const hasError = results.some((result) => result?.error);
 
     if (hasError)
       throw new Error(

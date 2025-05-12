@@ -8,7 +8,7 @@ const domain = process.env.NEXT_PUBLIC_BASE_URL;
 // const domain = "http://localhost:3000";
 
 export async function POST(request) {
-  const { lineItems } = await request.json();
+  const { items: lineItems } = await request.json();
 
   try {
     const stripeLineItems = lineItems.map((item) => ({

@@ -26,9 +26,8 @@ export async function POST(request) {
     const inventoryUpdates = lineItems.data.map(async (item) => {
       const metadata = item.price.product.metadata;
 
-      const ticketId = +metadata.db_ticket_id;
-      const setNum = +metadata.set_num;
-      const quantityPurchased = item.quantity / setNum;
+      const ticketId = metadata.db_ticket_id;
+      const quantityPurchased = item.quantity / metadata.set_num;
 
       return await updateTicketInventory(ticketId, quantityPurchased);
     });
