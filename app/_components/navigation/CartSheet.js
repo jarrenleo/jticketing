@@ -49,7 +49,8 @@ async function checkTicketsAvailability(items) {
 async function updateTicketsInventory(items) {
   try {
     const inventoryUpdates = items.map(
-      async (item) => await updateTicketInventory(item.id, item.cartQuantity),
+      async (item) =>
+        await updateTicketInventory(+item.id, -1 * item.cartQuantity),
     );
     const results = await Promise.all(inventoryUpdates);
 
@@ -57,7 +58,7 @@ async function updateTicketsInventory(items) {
 
     if (hasError)
       throw new Error(
-        "Failed to reserve items in cart. Please try again in 30 minutes.",
+        "Failed to reserve items in cart. Please try again later.",
       );
   } catch (error) {
     throw Error(error.message);
