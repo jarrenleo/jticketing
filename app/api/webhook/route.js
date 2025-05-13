@@ -11,31 +11,36 @@ export async function POST(request) {
   const signature = (await headers()).get("stripe-signature");
   const event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
 
-  if (
-    event.type !== "checkout.session.async_payment_failed" &&
-    event.type !== "checkout.session.expired"
-  )
-    return;
+  switch (event.type) {
+    case "checkout.session.expired":
+      try {
+        const session = event.data.object;
+        const lineItems = await stripe.checkout.sessions.listLineItems(
+          session.id,
+          {
+            expand: ["data.price.product"],
+          },
+        );
 
-  try {
-    const session = event.data.object;
-    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
-      expand: ["data.price.product"],
-    });
+        const inventoryUpdates = lineItems.data.map(async (item) => {
+          const metadata = item.price.product.metadata;
+          const ticketId = metadata.db_ticket_id;
+          const cartQuantity = metadata.cart_quantity;
 
-    const inventoryUpdates = lineItems.data.map(async (item) => {
-      const metadata = item.price.product.metadata;
-
-      const ticketId = metadata.db_ticket_id;
-      const quantityPurchased = item.quantity / metadata.set_num;
-
-      return await updateTicketInventory(ticketId, quantityPurchased);
-    });
-    await Promise.all(inventoryUpdates);
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to process payment completion event." },
-      { status: 500 },
-    );
+          return await updateTicketInventory(ticketId, cartQuantity);
+        });
+        await Promise.all(inventoryUpdates);
+      } catch (error) {
+        return NextResponse.json(
+          { error: "Failed to process payment completion event." },
+          { status: 500 },
+        );
+      }
+      break;
+    default:
+      return NextResponse.json(
+        { error: "Not listening to this event type." },
+        { status: 400 },
+      );
   }
 }

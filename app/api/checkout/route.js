@@ -21,7 +21,7 @@ export async function POST(request) {
           images: [retrieveImageUrl("events", item.image_file)],
           metadata: {
             db_ticket_id: item.id,
-            set_num: item.quantity,
+            cart_quantity: item.cartQuantity,
           },
         },
         unit_amount: item.price * 100,
