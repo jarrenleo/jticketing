@@ -43,4 +43,6 @@ export async function POST(request) {
         { status: 400 },
       );
   }
+
+  return NextResponse.json({ received: true });
 }
