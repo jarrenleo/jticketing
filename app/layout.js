@@ -1,6 +1,7 @@
 import { Geist } from "next/font/google";
 import ThemeProvider from "./_providers/ThemeProvider";
 import CartProvider from "./_contexts/CartContext";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         >
           <CartProvider>{children}</CartProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
