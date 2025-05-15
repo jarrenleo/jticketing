@@ -116,7 +116,7 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
             ))
           ) : (
             <div className="mt-8 text-center text-muted-foreground">
-              Sold Out.
+              No tickets available
             </div>
           )}
         </div>

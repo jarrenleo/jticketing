@@ -31,48 +31,12 @@ export default async function Main() {
       return (
         <div className="flex flex-1 flex-col items-center justify-center px-4">
           <span className="mb-2 text-2xl font-bold text-foreground">
-            We are sold out.
+            We are sold out
           </span>
 
           <span className="mb-4 text-muted-foreground">
             Please follow our social media for updates.
           </span>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="https://www.facebook.com/jfaikicks"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Facebook
-                height={24}
-                width={24}
-                className="fill-foreground transition-colors hover:fill-[#0866FF]"
-              />
-            </Link>
-            <Link
-              href="https://www.instagram.com/jfaikicks"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Instagram
-                height={24}
-                width={24}
-                className="fill-foreground transition-colors hover:fill-[#FF0069]"
-              />
-            </Link>
-            <Link
-              href="https://www.xiaohongshu.com/user/profile/60d82dbb0000000001006b13"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <XiaoHongShu
-                height={24}
-                width={24}
-                className="fill-foreground transition-colors hover:fill-[#FF2442]"
-              />
-            </Link>
-          </div>
         </div>
       );
 

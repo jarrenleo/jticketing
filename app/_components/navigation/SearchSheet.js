@@ -107,8 +107,8 @@ export default function SearchSheet({
                   </ul>
                 </>
               ) : (
-                <p className="mt-4 text-center text-muted-foreground">
-                  No results found.
+                <p className="mt-8 text-center text-muted-foreground">
+                  No results found
                 </p>
               )}
             </>

@@ -30,6 +30,8 @@ export async function POST(request) {
           return await updateTicketInventory(ticketId, cartQuantity);
         });
         await Promise.all(inventoryUpdates);
+
+        return NextResponse.json({ received: true });
       } catch (error) {
         return NextResponse.json(
           { error: "Failed to process payment completion event." },
@@ -43,6 +45,4 @@ export async function POST(request) {
         { status: 400 },
       );
   }
-
-  return NextResponse.json({ received: true });
 }

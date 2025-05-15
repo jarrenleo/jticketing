@@ -31,12 +31,12 @@ async function checkTicketsAvailability(items) {
       async (item) =>
         await checkTicketAvailability(item.id, item.price, item.cartQuantity),
     );
+
     const results = await Promise.all(ticketAvailabilityChecks);
 
     const allTicketsAvailable = results.every(
       (result) => result.data.ticket_availability,
     );
-
     if (!allTicketsAvailable)
       throw new Error(
         "Certain items in cart are unavailable. Please remove them before proceeding to checkout.",
@@ -52,10 +52,10 @@ async function updateTicketsInventory(items) {
       async (item) =>
         await updateTicketInventory(item.id, -1 * item.cartQuantity),
     );
+
     const results = await Promise.all(inventoryUpdates);
 
     const hasError = results.some((result) => result?.error);
-
     if (hasError)
       throw new Error(
         "Failed to reserve items in cart. Please try again later.",
@@ -75,6 +75,8 @@ export default function CartSheet() {
     getTotalItems,
     isCartOpen,
     closeCart,
+    checkoutSessionId,
+    setCheckoutSessionId,
   } = useCart();
 
   useEffect(() => {
@@ -85,19 +87,26 @@ export default function CartSheet() {
   }, [error]);
 
   async function handleCheckout() {
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
+      if (checkoutSessionId) {
+        const response = await fetch("/api/checkout/expire", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sessionId: checkoutSessionId }),
+        });
+
+        const { error } = await response.json();
+        if (error) throw new Error(error);
+      }
 
       await checkTicketsAvailability(items);
       await updateTicketsInventory(items);
 
-      const stripe = await stripePromise;
-      if (!stripe)
-        throw new Error(
-          "Stripe payment could not be loaded. Please try again later.",
-        );
-
-      const response = await fetch("/api/checkout", {
+      const response = await fetch("/api/checkout/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,25 +114,24 @@ export default function CartSheet() {
         body: JSON.stringify({ items }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error);
-      }
-
       const { sessionId } = await response.json();
-
       if (!sessionId)
         throw new Error(
-          "Failed to retrieve payment session ID. Please try again later.",
+          "Failed to create checkout session. Please try again later.",
         );
+
+      setCheckoutSessionId(sessionId);
+
+      const stripe = await stripePromise;
+      if (!stripe)
+        throw new Error("Stripe could not be loaded. Please try again later.");
 
       const { error } = await stripe.redirectToCheckout({
         sessionId: sessionId,
       });
-
       if (error)
         throw new Error(
-          "Failed to redirect to Stripe payment. Please try again later.",
+          "Failed to redirect to Stripe. Please try again later.",
         );
     } catch (error) {
       setError(

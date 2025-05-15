@@ -6,16 +6,25 @@ const CartContext = createContext(undefined);
 
 export default function CartProvider({ children }) {
   const [items, setItems] = useState([]);
+  const [checkoutSessionId, setCheckoutSessionId] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("ticketCart");
     if (savedCart) setItems(JSON.parse(savedCart));
+
+    const savedCheckoutSessionId = localStorage.getItem("checkoutSessionId");
+    if (savedCheckoutSessionId)
+      setCheckoutSessionId(JSON.parse(savedCheckoutSessionId));
   }, []);
 
   useEffect(() => {
     localStorage.setItem("ticketCart", JSON.stringify(items));
-  }, [items]);
+    localStorage.setItem(
+      "checkoutSessionId",
+      JSON.stringify(checkoutSessionId),
+    );
+  }, [items, checkoutSessionId]);
 
   function addItem(item) {
     const existingItemIndex = items.findIndex(
@@ -64,10 +73,6 @@ export default function CartProvider({ children }) {
     );
   }
 
-  function clearCart() {
-    setItems([]);
-  }
-
   function openCart() {
     setIsCartOpen(true);
   }
@@ -80,6 +85,10 @@ export default function CartProvider({ children }) {
     setIsCartOpen((isCartOpen) => !isCartOpen);
   }
 
+  function clearCart() {
+    setItems([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -89,11 +98,13 @@ export default function CartProvider({ children }) {
         updateQuantity,
         getTotalItems,
         getTotalPrice,
-        clearCart,
+        checkoutSessionId,
+        setCheckoutSessionId,
         isCartOpen,
         openCart,
         closeCart,
         toggleCart,
+        clearCart,
       }}
     >
       {children}
