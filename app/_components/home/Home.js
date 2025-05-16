@@ -1,11 +1,7 @@
-import Link from "next/link";
 import FeaturedEvents from "./FeaturedEvents";
 import Events from "./Events";
 import Reviews from "./Reviews";
 import { getEvents, getReviews } from "@/app/_lib/dataService";
-import Facebook from "../icons/Facebook";
-import Instagram from "../icons/Instagram";
-import XiaoHongShu from "../icons/XiaoHongShu";
 
 export default async function Main() {
   try {
