@@ -10,6 +10,8 @@ import {
 import ReviewCard from "./ReviewCard";
 
 export default function Reviews({ reviews }) {
+  reviews = reviews.reverse();
+
   return (
     <>
       <h3 className="mb-4 text-xl font-bold">Our Tickets, Your Memories</h3>
