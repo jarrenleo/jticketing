@@ -3,7 +3,7 @@ export default function EventInfo({ additionalInfo }) {
 
   return (
     <div className="mb-8 rounded-md bg-accent p-4 text-accent-foreground">
-      {additionalInfo}
+      <p>{additionalInfo}</p>
     </div>
   );
 }
