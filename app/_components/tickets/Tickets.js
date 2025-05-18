@@ -9,6 +9,7 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
 import EventCard from "./EventCard";
+import EventInfo from "./EventInfo";
 import TicketList from "./TicketList";
 import SeatMap from "./SeatMap";
 
@@ -37,7 +38,7 @@ export default function Tickets({ eventData, ticketsData }) {
   useEffect(() => {
     if (!viewportHeight) return;
 
-    const scrollArea = (viewportHeight - 421.33).toFixed(2);
+    const scrollArea = (viewportHeight - 477.33).toFixed(2);
     setTicketScrollArea(scrollArea);
   }, [viewportHeight]);
 
@@ -56,9 +57,10 @@ export default function Tickets({ eventData, ticketsData }) {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <EventCard event={eventData} />
+      <EventInfo additionalInfo={eventData.additional_info} />
       {viewportWidth < 1024 ? (
         <>
-          <EventCard event={eventData} />
           <Tabs defaultValue="ticket_listing">
             <TabsList className="mb-2 w-full">
               <TabsTrigger
@@ -81,7 +83,6 @@ export default function Tickets({ eventData, ticketsData }) {
         </>
       ) : (
         <>
-          <EventCard event={eventData} />
           <div className="grid grid-cols-5 gap-8">
             <TicketList
               tickets={ticketsData}
