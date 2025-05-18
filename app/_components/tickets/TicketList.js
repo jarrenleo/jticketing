@@ -80,9 +80,7 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
     <section className="col-span-3">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold">Tickets</h2>
-        <div
-          className={`flex items-center gap-2 ${ticketScrollArea && "pr-8"}`}
-        >
+        <div className="flex items-center gap-2">
           <FilterSheet
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
@@ -102,7 +100,7 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
       </div>
 
       <div
-        className={`${ticketScrollArea && "overflow-y-auto pr-4"}`}
+        className={`${ticketScrollArea && "scrollbar-hide overflow-y-auto"}`}
         style={ticketScrollArea ? { height: `${ticketScrollArea}px` } : {}}
       >
         <div
