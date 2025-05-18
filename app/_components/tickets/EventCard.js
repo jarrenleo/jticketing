@@ -3,7 +3,7 @@ import { formatDateTime, retrieveImageUrl } from "@/app/_lib/utils";
 
 export default function EventCard({ event }) {
   return (
-    <div className="mb-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+    <div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
       <div className="relative h-48 w-full overflow-hidden rounded-md sm:h-24 sm:w-[220.8px]">
         <Image
           src={retrieveImageUrl("events", event.image_file)}

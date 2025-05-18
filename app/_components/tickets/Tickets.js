@@ -38,9 +38,12 @@ export default function Tickets({ eventData, ticketsData }) {
   useEffect(() => {
     if (!viewportHeight) return;
 
-    const scrollArea = (viewportHeight - 477.33).toFixed(2);
+    const scrollArea = (
+      viewportHeight -
+      (421.33 + (eventData.additional_info ? 88 : 0))
+    ).toFixed(2);
     setTicketScrollArea(scrollArea);
-  }, [viewportHeight]);
+  }, [viewportHeight, eventData]);
 
   function handleAddToCart(ticket) {
     const item = {

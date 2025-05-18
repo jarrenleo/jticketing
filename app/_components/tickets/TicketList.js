@@ -20,6 +20,8 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
   useEffect(() => {
     let filteredTickets = tickets;
 
+    filteredTickets = filteredTickets.filter((ticket) => ticket.num_sets > 0);
+
     if (selectedDate)
       filteredTickets = filterTickets(filteredTickets, "date", selectedDate);
 
@@ -60,11 +62,9 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
               .toString()
               .localeCompare(a.row.toString(), undefined, { numeric: true });
           default:
-            return "";
+            return 0;
         }
       });
-
-    filteredTickets = filteredTickets.filter((ticket) => ticket.num_sets > 0);
 
     setDisplayTickets(filteredTickets);
   }, [
