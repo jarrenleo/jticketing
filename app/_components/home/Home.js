@@ -36,16 +36,11 @@ export default async function Main() {
         </div>
       );
 
-    const sortedEvents = eventsData.sort(
-      (a, b) => new Date(a.opening_date) - new Date(b.opening_date),
-    );
-    const reviews = reviewsData.reverse();
-
     return (
       <div className="px-4 py-8">
-        <FeaturedEvents events={sortedEvents} />
-        <Events events={sortedEvents} />
-        <Reviews reviews={reviews} />
+        <FeaturedEvents events={eventsData} />
+        <Events events={eventsData} />
+        <Reviews reviews={reviewsData} />
       </div>
     );
   } catch (error) {}
