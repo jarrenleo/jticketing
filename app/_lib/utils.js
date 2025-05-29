@@ -25,6 +25,15 @@ export function formatDateTime(datetime) {
   });
 }
 
+export function formatPaymentMethod(session) {
+  const paymentMethod = session.payment_intent?.payment_method;
+
+  if (paymentMethod?.card)
+    return `${paymentMethod.card.brand.charAt(0).toUpperCase() + paymentMethod.card.brand.slice(1)} ${paymentMethod.card.funding} (•••• ${paymentMethod.card.last4})`;
+
+  return "N/A";
+}
+
 export function retrieveImageUrl(bucketName, imageName) {
   return `https://zaonfxpskbeyoutahieb.supabase.co/storage/v1/object/public/${bucketName}//${imageName}`;
 }

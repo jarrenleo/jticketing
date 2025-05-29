@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -37,7 +36,6 @@ export default function SuccessCard({ checkoutDetails }) {
       <Card className="w-full max-w-[768px] border-border bg-background">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Order Details</CardTitle>
-          <CardDescription>View your order details</CardDescription>
         </CardHeader>
         <CardContent className="space-y-8">
           <div className="grid gap-4 text-sm font-medium md:grid-cols-2">
@@ -67,7 +65,7 @@ export default function SuccessCard({ checkoutDetails }) {
           <Separator />
 
           <div>
-            <h2 className="mb-4 font-medium">Tickets Purchased</h2>
+            <h2 className="mb-4 text-2xl font-bold">Tickets Purchased</h2>
             <ul className="flex flex-col gap-4 text-sm text-muted-foreground">
               {lineItems.map((item) => (
                 <li key={item.id} className="flex items-center gap-4">

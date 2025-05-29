@@ -104,7 +104,6 @@ export default function CartSheet() {
       }
 
       await checkTicketsAvailability(items);
-      await updateTicketsInventory(items);
 
       const response = await fetch("/api/checkout/create", {
         method: "POST",
@@ -133,6 +132,8 @@ export default function CartSheet() {
         throw new Error(
           "Failed to redirect to Stripe. Please try again later.",
         );
+
+      await updateTicketsInventory(items);
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "An unknown error occurred.",

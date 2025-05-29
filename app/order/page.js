@@ -1,11 +1,9 @@
-import Link from "next/link";
 import Stripe from "stripe";
 import Navigation from "@/app/_components/navigation/Navigation";
 import SuccessCard from "@/app/_components/success/SuccessCard";
 import Footer from "@/app/_components/footer/Footer";
 import ClearCart from "@/app/_components/navigation/ClearCart";
-import { Button } from "@/app/_components/ui/Button";
-import { formatDateTime } from "@/app/_lib/utils";
+import { formatDateTime, formatPaymentMethod } from "@/app/_lib/utils";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -18,15 +16,6 @@ export const metadata = {
   },
 };
 
-function formatPaymentMethod(session) {
-  const paymentMethod = session.payment_intent?.payment_method;
-
-  if (paymentMethod?.card)
-    return `${paymentMethod.card.brand.charAt(0).toUpperCase() + paymentMethod.card.brand.slice(1)} ${paymentMethod.card.funding} (•••• ${paymentMethod.card.last4})`;
-
-  return "N/A";
-}
-
 export default async function SuccessPage({ searchParams }) {
   const { session_id } = await searchParams;
   const session = await stripe.checkout.sessions.retrieve(session_id, {
@@ -36,29 +25,6 @@ export default async function SuccessPage({ searchParams }) {
       "payment_intent.payment_method",
     ],
   });
-
-  if (session.payment_intent.status !== "succeeded")
-    return (
-      <div className="container mx-auto flex min-h-screen flex-col">
-        <Navigation />
-        <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-8">
-          <h1 className="text-3xl font-bold">Order Cancelled</h1>
-          <p className="mb-4 max-w-[600px] text-center text-muted-foreground">
-            Your order was cancelled because the tickets you selected were
-            purchased by another customer before your payment was processed,
-            resulting in insufficient available tickets to fulfill your order.
-            We are sorry for any inconvenience caused.
-          </p>
-          <Link href="/" className="inline-block">
-            <Button variant="outline" className="font-semibold">
-              Back to Home
-            </Button>
-          </Link>
-        </main>
-        <Footer />
-        <ClearCart />
-      </div>
-    );
 
   const customerName = session.custom_fields.find(
     (f) => f.key === "customer_name",
