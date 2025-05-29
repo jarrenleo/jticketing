@@ -125,6 +125,8 @@ export default function CartSheet() {
       if (!stripe)
         throw new Error("Stripe could not be loaded. Please try again later.");
 
+      await updateTicketsInventory(items);
+
       const { error } = await stripe.redirectToCheckout({
         sessionId: sessionId,
       });
@@ -132,8 +134,6 @@ export default function CartSheet() {
         throw new Error(
           "Failed to redirect to Stripe. Please try again later.",
         );
-
-      await updateTicketsInventory(items);
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "An unknown error occurred.",
