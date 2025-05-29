@@ -85,7 +85,7 @@ export default function SuccessCard({ checkoutDetails }) {
                       {item.price.product.description}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      {`${item.quantity} ${item.quantity === 1 ? "ticket" : "tickets"}`}
+                      {item.quantity} ticket{item.quantity > 1 ? "s" : ""}
                     </span>
                   </div>
                 </li>

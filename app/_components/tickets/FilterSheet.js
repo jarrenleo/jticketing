@@ -26,20 +26,20 @@ export default function FilterSheet({
   setSelectedQuantity,
   selectedCategory,
   setSelectedCategory,
-  selectedSection,
-  setSelectedSection,
+  // selectedSection,
+  // setSelectedSection,
   tickets,
 }) {
   const availableDates = getUniqueData(tickets, "date");
   const availableQuantities = getUniqueData(tickets, "quantity");
   const availableCategories = getUniqueData(tickets, "category");
-  const availableSections = getUniqueData(tickets, "section");
+  // const availableSections = getUniqueData(tickets, "section");
 
   function clearFilters() {
     setSelectedDate("");
     setSelectedQuantity("");
     setSelectedCategory("");
-    setSelectedSection("");
+    // setSelectedSection("");
   }
 
   return (
@@ -116,14 +116,14 @@ export default function FilterSheet({
               </Select>
             </div>
 
-            <div>
+            {/* <div>
               <Combobox
                 value={selectedSection}
                 setValue={setSelectedSection}
                 field={"Section"}
                 fieldData={availableSections}
               />
-            </div>
+            </div> */}
           </div>
 
           <Button variant="outline" className="w-full" onClick={clearFilters}>

@@ -21,8 +21,8 @@ export default function SortSelect({ selectedSort, setSelectedSort }) {
           <SelectLabel>Sort By</SelectLabel>
           <SelectItem value="price_asc">Price, low to high</SelectItem>
           <SelectItem value="price_desc">Price, high to low</SelectItem>
-          <SelectItem value="row_asc">Row, a-z</SelectItem>
-          <SelectItem value="row_desc">Row, z-a</SelectItem>
+          {/* <SelectItem value="row_asc">Row, a-z</SelectItem>
+          <SelectItem value="row_desc">Row, z-a</SelectItem> */}
         </SelectGroup>
       </SelectContent>
     </Select>

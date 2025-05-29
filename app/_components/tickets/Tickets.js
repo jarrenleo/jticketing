@@ -40,7 +40,7 @@ export default function Tickets({ eventData, ticketsData }) {
 
     const scrollArea = (
       viewportHeight -
-      (421.33 + (eventData.additional_info ? 88 : 0))
+      (421.33 + (eventData.additional_info ? 136 : 0))
     ).toFixed(2);
     setTicketScrollArea(scrollArea);
   }, [viewportHeight, eventData]);

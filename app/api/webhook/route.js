@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
-import Email from "@/app/_components/Email/Email";
+import Email from "@/app/_components/Email/Email.jsx";
 import { updateTicketInventory } from "@/app/_lib/dataService";
 import { formatDateTime, formatPaymentMethod } from "@/app/_lib/utils";
 
@@ -54,16 +54,12 @@ export async function POST(request) {
           from: "Jticketing <noreply@orders.jticketing.com>",
           to: [customerEmail],
           subject: "Your order confirmation from Jticketing",
-          react: Email(checkoutDetails),
+          react: <Email checkoutDetails={checkoutDetails} />,
         });
-        if (error) {
-          console.error(error.message);
-          throw new Error(error.message);
-        }
+        if (error) throw new Error(error.message);
 
         return NextResponse.json({ received: true });
       } catch (error) {
-        console.error(error.message);
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
     case "checkout.session.expired":

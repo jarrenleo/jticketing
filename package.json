@@ -1,6 +1,6 @@
 {
   "name": "jticketing",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,7 +17,6 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
     "@react-email/components": "^0.0.41",
-    "@react-email/tailwind": "^1.0.5",
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.3.1",
     "@supabase/supabase-js": "^2.49.8",
@@ -35,6 +34,7 @@
     "postcss": "^8.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-email": "^4.0.15",
     "resend": "^4.5.1",
     "stripe": "^18.1.1",
     "tailwind-merge": "^3.3.0",

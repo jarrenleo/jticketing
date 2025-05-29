@@ -14,7 +14,7 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSection, setSelectedSection] = useState("");
+  // const [selectedSection, setSelectedSection] = useState("");
   const [selectedSort, setSelectedSort] = useState("");
 
   useEffect(() => {
@@ -39,12 +39,12 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
         selectedCategory,
       );
 
-    if (selectedSection)
-      filteredTickets = filterTickets(
-        filteredTickets,
-        "section",
-        selectedSection,
-      );
+    // if (selectedSection)
+    //   filteredTickets = filterTickets(
+    //     filteredTickets,
+    //     "section",
+    //     selectedSection,
+    //   );
 
     if (selectedSort)
       filteredTickets = [...filteredTickets].sort((a, b) => {
@@ -53,14 +53,14 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
             return a.price - b.price;
           case "price_desc":
             return b.price - a.price;
-          case "row_asc":
-            return a.row
-              .toString()
-              .localeCompare(b.row.toString(), undefined, { numeric: true });
-          case "row_desc":
-            return b.row
-              .toString()
-              .localeCompare(a.row.toString(), undefined, { numeric: true });
+          // case "row_asc":
+          //   return a.row
+          //     .toString()
+          //     .localeCompare(b.row.toString(), undefined, { numeric: true });
+          // case "row_desc":
+          //   return b.row
+          //     .toString()
+          //     .localeCompare(a.row.toString(), undefined, { numeric: true });
           default:
             return 0;
         }
@@ -72,7 +72,7 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
     selectedDate,
     selectedQuantity,
     selectedCategory,
-    selectedSection,
+    // selectedSection,
     selectedSort,
   ]);
 
@@ -88,8 +88,8 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
             setSelectedQuantity={setSelectedQuantity}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
-            selectedSection={selectedSection}
-            setSelectedSection={setSelectedSection}
+            // selectedSection={selectedSection}
+            // setSelectedSection={setSelectedSection}
             tickets={tickets}
           />
           <SortSelect
