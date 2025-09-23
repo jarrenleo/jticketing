@@ -38,7 +38,7 @@ export default function Events({ events }) {
           <Button
             variant="outline"
             onClick={loadMoreEvents}
-            className="mt-8 font-semibold"
+            className="mt-8 rounded-xl font-semibold"
           >
             <span>Show More</span>
           </Button>
