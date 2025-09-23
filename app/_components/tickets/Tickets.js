@@ -65,14 +65,17 @@ export default function Tickets({ eventData, ticketsData }) {
       {viewportWidth < 1024 ? (
         <>
           <Tabs defaultValue="ticket_listing">
-            <TabsList className="mb-2 w-full">
+            <TabsList className="mb-2 w-full rounded-xl">
               <TabsTrigger
                 value="ticket_listing"
-                className="w-full font-semibold"
+                className="w-full rounded-lg font-semibold"
               >
                 Tickets
               </TabsTrigger>
-              <TabsTrigger value="seat_map" className="w-full font-semibold">
+              <TabsTrigger
+                value="seat_map"
+                className="w-full rounded-lg font-semibold"
+              >
                 Seat Map
               </TabsTrigger>
             </TabsList>
