@@ -140,27 +140,27 @@ export default function SeatMap({ event }) {
   if (!event) return null;
 
   return (
-    <section className="col-span-2 mb-8 rounded-md">
+    <section className="col-span-2 mb-8">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold">Seat Map</h2>
         <div className="flex items-center space-x-0.5">
           <button
             onClick={zoomIn}
-            className="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
+            className="cursor-pointer rounded-xl p-2 transition-colors hover:bg-accent"
             aria-label="Zoom in button"
           >
             <ZoomIn width={20} height={20} />
           </button>
           <button
             onClick={zoomOut}
-            className="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
+            className="cursor-pointer rounded-xl p-2 transition-colors hover:bg-accent"
             aria-label="Zoom out button"
           >
             <ZoomOut width={20} height={20} />
           </button>
           <button
             onClick={resetZoom}
-            className="cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
+            className="cursor-pointer rounded-xl p-2 transition-colors hover:bg-accent"
             aria-label="Reset zoom button"
           >
             <RotateCcw width={20} height={20} />

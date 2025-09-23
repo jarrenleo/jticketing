@@ -83,7 +83,7 @@ export default function Footer() {
             <PopoverTrigger className="transition-colors hover:text-primary">
               Contact Us
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="rounded-xl border-border">
               <div className="flex flex-col gap-4">
                 <div>
                   <h3 className="font-bold">Need help?</h3>
@@ -97,7 +97,7 @@ export default function Footer() {
                     href="https://wa.me/601165324028"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+                    className="group flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2 transition-colors hover:bg-accent"
                   >
                     <WhatsApp
                       height={16}
@@ -113,7 +113,7 @@ export default function Footer() {
                     href="mailto:jfaikicks@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+                    className="group flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2 transition-colors hover:bg-accent"
                   >
                     <Mail
                       height={16}

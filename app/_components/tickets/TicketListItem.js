@@ -9,7 +9,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
   if (num_sets <= 0) return null;
 
   return (
-    <div className="flex h-[189.33px] flex-col rounded-md border border-border p-4">
+    <div className="flex h-[189.33px] flex-col rounded-xl border border-border p-4">
       <div className="flex items-center justify-between text-lg font-bold">
         <span className="line-clamp-1">{category}</span>
         <span>RM {price}</span>
@@ -33,7 +33,7 @@ export default function TicketListItem({ ticket, onAddToCart }) {
         {formatDateTime(date)}
       </span>
 
-      <Button className="w-full" onClick={() => onAddToCart(ticket)}>
+      <Button className="w-full rounded-xl" onClick={() => onAddToCart(ticket)}>
         <span className="text-sm font-semibold">Add to Cart</span>
       </Button>
     </div>

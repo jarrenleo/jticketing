@@ -7,7 +7,7 @@ import Facebook from "../icons/Facebook";
 export default function ReviewCard({ review }) {
   return (
     <Link href={review.link} target="_blank" rel="noopener noreferrer">
-      <div className="flex flex-col justify-center rounded-md bg-muted p-6 transition-colors hover:bg-accent hover:text-accent-foreground">
+      <div className="flex flex-col justify-center rounded-xl bg-muted p-6 transition-colors hover:bg-accent hover:text-accent-foreground">
         <Quote width={24} height={24} style={{ transform: "scaleX(-1)" }} />
 
         <div className="flex h-48 items-center">

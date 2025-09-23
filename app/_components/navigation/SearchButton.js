@@ -28,7 +28,7 @@ export default function SearchButton() {
     <>
       <button
         onClick={() => setIsSearchOpen(!isSearchOpen)}
-        className="group rounded-md p-1.5 transition-colors hover:bg-accent"
+        className="group rounded-xl p-2 transition-colors hover:bg-accent"
       >
         <Search
           width={20}

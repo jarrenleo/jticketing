@@ -2,154 +2,52 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "../../_lib/utils";
 
-const AccordionItemContext = React.createContext(undefined);
+function Accordion({ ...props }) {
+  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
+}
 
-const useAccordionItem = () => {
-  const context = React.useContext(AccordionItemContext);
-  if (!context) {
-    throw new Error("useAccordionItem must be used within an AccordionItem");
-  }
-  return context;
-};
+function AccordionItem({ className, ...props }) {
+  return (
+    <AccordionPrimitive.Item
+      data-slot="accordion-item"
+      className={cn("border-b last:border-b-0", className)}
+      {...props}
+    />
+  );
+}
 
-const Accordion = AccordionPrimitive.Root;
-
-const AccordionItem = React.forwardRef(
-  ({ className, children, ...props }, ref) => {
-    const [isOpen, setIsOpen] = React.useState(false);
-
-    return (
-      <AccordionItemContext.Provider value={{ isOpen, setIsOpen }}>
-        <AccordionPrimitive.Item
-          ref={ref}
-          className={cn("border-b border-border", className)}
-          {...props}
-        >
-          {children}
-        </AccordionPrimitive.Item>
-      </AccordionItemContext.Provider>
-    );
-  },
-);
-AccordionItem.displayName = "AccordionItem";
-
-const AccordionTrigger = React.forwardRef(
-  (
-    {
-      className,
-      children,
-      transition = { type: "spring", stiffness: 150, damping: 17 },
-      chevron = true,
-      ...props
-    },
-    ref,
-  ) => {
-    const triggerRef = React.useRef(null);
-    React.useImperativeHandle(ref, () => triggerRef.current);
-    const { isOpen, setIsOpen } = useAccordionItem();
-
-    React.useEffect(() => {
-      const node = triggerRef.current;
-      if (!node) return;
-
-      const observer = new MutationObserver((mutationsList) => {
-        mutationsList.forEach((mutation) => {
-          if (mutation.attributeName === "data-state") {
-            const currentState = node.getAttribute("data-state");
-            setIsOpen(currentState === "open");
-          }
-        });
-      });
-      observer.observe(node, {
-        attributes: true,
-        attributeFilter: ["data-state"],
-      });
-      const initialState = node.getAttribute("data-state");
-      setIsOpen(initialState === "open");
-      return () => {
-        observer.disconnect();
-      };
-    }, [setIsOpen]);
-
-    return (
-      <AccordionPrimitive.Header className="flex">
-        <AccordionPrimitive.Trigger
-          ref={triggerRef}
-          className={cn(
-            "flex flex-1 items-center justify-between py-4 text-start font-medium hover:underline",
-            className,
-          )}
-          {...props}
-        >
-          {children}
-
-          {chevron && (
-            <motion.div
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={transition}
-            >
-              <ChevronDown className="size-5 shrink-0" />
-            </motion.div>
-          )}
-        </AccordionPrimitive.Trigger>
-      </AccordionPrimitive.Header>
-    );
-  },
-);
-AccordionTrigger.displayName = "AccordionTrigger";
-
-const AccordionContent = React.forwardRef(
-  (
-    {
-      className,
-      children,
-      transition = { type: "spring", stiffness: 150, damping: 17 },
-      ...props
-    },
-    ref,
-  ) => {
-    const { isOpen } = useAccordionItem();
-
-    return (
-      <AnimatePresence>
-        {isOpen && (
-          <AccordionPrimitive.Content forceMount {...props}>
-            <motion.div
-              key="accordion-content"
-              initial={{ height: 0, opacity: 0, "--mask-stop": "0%" }}
-              animate={{ height: "auto", opacity: 1, "--mask-stop": "100%" }}
-              exit={{ height: 0, opacity: 0, "--mask-stop": "0%" }}
-              transition={transition}
-              style={{
-                maskImage:
-                  "linear-gradient(black var(--mask-stop), transparent var(--mask-stop))",
-                WebkitMaskImage:
-                  "linear-gradient(black var(--mask-stop), transparent var(--mask-stop))",
-              }}
-              className="overflow-hidden"
-              ref={ref}
-            >
-              <div className={cn("pb-4 pt-0 text-sm", className)}>
-                {children}
-              </div>
-            </motion.div>
-          </AccordionPrimitive.Content>
+function AccordionTrigger({ className, children, ...props }) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        data-slot="accordion-trigger"
+        className={cn(
+          "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium outline-none transition-all hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
+          className,
         )}
-      </AnimatePresence>
-    );
-  },
-);
-AccordionContent.displayName = "AccordionContent";
+        {...props}
+      >
+        {children}
+        <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200" />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  );
+}
 
-export {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-  useAccordionItem,
-};
+function AccordionContent({ className, children, ...props }) {
+  return (
+    <AccordionPrimitive.Content
+      data-slot="accordion-content"
+      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+      {...props}
+    >
+      <div className={cn("pb-4 pt-0", className)}>{children}</div>
+    </AccordionPrimitive.Content>
+  );
+}
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

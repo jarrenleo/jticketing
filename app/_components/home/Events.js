@@ -24,7 +24,7 @@ export default function Events({ events }) {
   }
 
   return (
-    <div className="mb-8">
+    <div className="mb-12">
       <h2 className="mb-4 text-xl font-bold">Events</h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

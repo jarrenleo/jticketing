@@ -121,7 +121,11 @@ export default function FAQPage() {
         </h2>
         <Accordion type="single" collapsible>
           {faqItems.map((item, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
+            <AccordionItem
+              key={index}
+              value={`item-${index}`}
+              className="border-border"
+            >
               <AccordionTrigger className="transition-colors hover:text-primary hover:no-underline">
                 {item.question}
               </AccordionTrigger>

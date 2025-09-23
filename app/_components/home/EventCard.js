@@ -8,7 +8,7 @@ import { formatDateTime, retrieveImageUrl } from "../../_lib/utils";
 export default function EventCard({ event }) {
   return (
     <Link href={`/tickets/${event.slug}`} className="group">
-      <div className="relative h-[174.78px] w-full overflow-hidden rounded-md sm:h-[125.36px] md:h-[153.19px] lg:h-[136.91px] xl:h-[128.77px] 2xl:h-[156.6px]">
+      <div className="relative h-[174.78px] w-full overflow-hidden rounded-xl sm:h-[125.36px] md:h-[153.19px] lg:h-[136.91px] xl:h-[128.77px] 2xl:h-[156.6px]">
         <Image
           src={retrieveImageUrl("events", event.image_file)}
           alt={`${event.artist} - ${event.title} event poster`}

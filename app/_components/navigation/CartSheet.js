@@ -150,7 +150,7 @@ export default function CartSheet() {
         if (!open) closeCart();
       }}
     >
-      <SheetContent className="flex flex-col overflow-y-auto px-0">
+      <SheetContent className="flex flex-col overflow-y-auto border-border px-0 pb-6">
         <SheetHeader className="border-b border-border px-4 pb-4">
           <SheetTitle className="flex flex-col">
             <span>My Cart</span>
@@ -166,12 +166,12 @@ export default function CartSheet() {
               {items.map((item) => (
                 <div key={item.id} className="flex flex-col gap-0.5">
                   <div className="mb-2 flex items-center gap-4">
-                    <div className="relative h-12 w-[110.4px] flex-shrink-0 overflow-hidden rounded-md">
+                    <div className="relative h-12 w-[110.4px] flex-shrink-0 overflow-hidden rounded-xl">
                       <Image
                         src={retrieveImageUrl("events", item.image_file)}
                         alt={`${item.artist} - ${item.title} event poster`}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes="110.4px"
                         className="object-cover"
                       />
                     </div>
@@ -207,7 +207,7 @@ export default function CartSheet() {
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center rounded-md bg-muted">
+                    <div className="flex items-center rounded-xl bg-muted">
                       <button
                         onClick={() => {
                           if (item.cartQuantity > 1) {
@@ -217,7 +217,7 @@ export default function CartSheet() {
 
                           removeItem(item.id);
                         }}
-                        className="rounded-l-md p-2 text-muted-foreground transition-colors hover:bg-accent"
+                        className="rounded-l-xl p-2 text-muted-foreground transition-colors hover:bg-accent"
                       >
                         <Minus height={16} width={16} />
                       </button>
@@ -230,7 +230,7 @@ export default function CartSheet() {
                           updateQuantity(item.id, item.cartQuantity + 1)
                         }
                         className={
-                          "rounded-r-md p-2 text-muted-foreground transition-colors hover:bg-accent disabled:opacity-50"
+                          "rounded-r-xl p-2 text-muted-foreground transition-colors hover:bg-accent disabled:opacity-50"
                         }
                         disabled={item.cartQuantity >= item.num_sets}
                       >
@@ -248,7 +248,7 @@ export default function CartSheet() {
               ))}
             </div>
 
-            <SheetFooter className="flex flex-col gap-2 px-4 sm:flex-col sm:justify-center sm:space-x-0">
+            <SheetFooter className="flex flex-col gap-2 px-4 py-0 sm:flex-col sm:justify-center sm:space-x-0">
               {error && (
                 <span className="mb-2 text-center text-sm font-medium text-destructive">
                   {error}
@@ -256,7 +256,7 @@ export default function CartSheet() {
               )}
               <button
                 onClick={handleCheckout}
-                className="flex w-full items-center justify-center gap-1 rounded-md bg-primary py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-1 rounded-xl bg-primary py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
                 disabled={isLoading}
               >
                 {!isLoading ? (
@@ -295,7 +295,7 @@ export default function CartSheet() {
             </div>
 
             <SheetClose asChild>
-              <button className="w-full rounded-md bg-primary py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+              <button className="w-full rounded-xl bg-primary py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
                 <span>Browse Events</span>
               </button>
             </SheetClose>

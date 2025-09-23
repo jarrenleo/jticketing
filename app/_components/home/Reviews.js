@@ -12,7 +12,7 @@ import ReviewCard from "./ReviewCard";
 export default function Reviews({ reviews }) {
   return (
     <>
-      <h3 className="mb-4 text-xl font-bold">Our Tickets, Your Memories</h3>
+      <h3 className="mb-4 text-xl font-bold">Reviews</h3>
 
       <Carousel
         opts={{

@@ -45,7 +45,7 @@ export default function FilterSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="group flex items-center gap-1 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
+        <button className="group flex items-center gap-1 rounded-xl border border-border px-3 py-2 text-sm font-medium hover:bg-accent hover:transition-colors">
           <SlidersHorizontal
             width={14}
             height={14}
@@ -56,21 +56,25 @@ export default function FilterSheet({
           </span>
         </button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col px-0">
+      <SheetContent side="left" className="flex flex-col border-border px-0">
         <SheetHeader className="border-b border-border px-4 pb-4">
           <SheetTitle>Filters</SheetTitle>
         </SheetHeader>
-        <div className="flex flex-1 flex-col justify-between px-4">
+        <div className="flex flex-1 flex-col justify-between px-4 pb-6">
           <div className="space-y-4">
             <div>
               <label className="mb-2 block text-sm font-medium">Date</label>
               <Select value={selectedDate} onValueChange={setSelectedDate}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full rounded-xl">
                   <SelectValue placeholder="Select Date" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-xl border-border">
                   {availableDates.map((date, index) => (
-                    <SelectItem key={index} value={date}>
+                    <SelectItem
+                      key={index}
+                      value={date}
+                      className="hover:rounded-lg"
+                    >
                       {formatDateTime(date)}
                     </SelectItem>
                   ))}
@@ -84,12 +88,16 @@ export default function FilterSheet({
                 value={selectedQuantity}
                 onValueChange={setSelectedQuantity}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full rounded-xl">
                   <SelectValue placeholder="Select Quantity" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-xl border-border">
                   {availableQuantities.map((quantity) => (
-                    <SelectItem key={quantity} value={quantity.toString()}>
+                    <SelectItem
+                      key={quantity}
+                      value={quantity.toString()}
+                      className="hover:rounded-lg"
+                    >
                       {quantity} {quantity === 1 ? "Ticket" : "Tickets"}
                     </SelectItem>
                   ))}
@@ -103,12 +111,16 @@ export default function FilterSheet({
                 value={selectedCategory}
                 onValueChange={setSelectedCategory}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full rounded-xl">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-xl border-border">
                   {availableCategories.map((category) => (
-                    <SelectItem key={category} value={category.toString()}>
+                    <SelectItem
+                      key={category}
+                      value={category.toString()}
+                      className="hover:rounded-lg"
+                    >
                       {category}
                     </SelectItem>
                   ))}
@@ -126,7 +138,11 @@ export default function FilterSheet({
             </div> */}
           </div>
 
-          <Button variant="outline" className="w-full" onClick={clearFilters}>
+          <Button
+            variant="ghost"
+            className="w-full rounded-xl border border-border"
+            onClick={clearFilters}
+          >
             <span className="font-semibold">Clear All Filters</span>
           </Button>
         </div>

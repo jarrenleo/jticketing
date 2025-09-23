@@ -13,7 +13,7 @@ export default function CartButton() {
     <>
       <button
         onClick={toggleCart}
-        className="group relative rounded-md p-1.5 transition-colors hover:bg-accent"
+        className="group relative rounded-xl p-2 transition-colors hover:bg-accent"
       >
         <ShoppingCart
           width={20}

@@ -19,7 +19,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={handleThemeToggle}
-      className="group cursor-pointer rounded-md p-1.5 transition-colors hover:bg-accent"
+      className="group cursor-pointer rounded-xl p-2 transition-colors hover:bg-accent"
       aria-label="Theme toggle button"
     >
       {resolvedTheme === "dark" ? (

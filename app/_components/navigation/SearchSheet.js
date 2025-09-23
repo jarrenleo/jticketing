@@ -37,7 +37,7 @@ export default function SearchSheet({
 
   return (
     <Sheet open={isSearchOpen} onOpenChange={(open) => setIsSearchOpen(open)}>
-      <SheetContent className="overflow-y-auto px-0">
+      <SheetContent className="overflow-y-auto border-border px-0">
         <SheetHeader className="border-b border-border px-4 pb-4">
           <SheetTitle>Search Events</SheetTitle>
         </SheetHeader>
@@ -52,7 +52,7 @@ export default function SearchSheet({
             <Input
               type="search"
               placeholder="Search artists or events"
-              className="pl-8 pr-2"
+              className="rounded-xl pl-8 pr-2"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               autoFocus
@@ -80,7 +80,7 @@ export default function SearchSheet({
                             href={`/tickets/${event.slug}`}
                             className="group flex items-center gap-4 p-4 transition-colors hover:bg-accent"
                           >
-                            <div className="relative h-12 w-[110.4px] overflow-hidden rounded-md">
+                            <div className="relative aspect-video w-[110.4px] flex-none overflow-hidden rounded-xl">
                               <Image
                                 src={retrieveImageUrl(
                                   "events",
@@ -88,7 +88,7 @@ export default function SearchSheet({
                                 )}
                                 alt={`${event.artist} - ${event.title} event poster`}
                                 fill
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                sizes="110.4px"
                                 className="object-cover"
                               />
                             </div>

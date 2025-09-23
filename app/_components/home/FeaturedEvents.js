@@ -11,6 +11,7 @@ import {
 } from "@/app/_components/ui/Carousel";
 import { retrieveImageUrl } from "@/app/_lib/utils";
 import Autoplay from "embla-carousel-autoplay";
+import BlurEffect from "react-progressive-blur";
 
 export default function FeaturedEvents({ events }) {
   let items = events;
@@ -18,7 +19,8 @@ export default function FeaturedEvents({ events }) {
   if (featuredEvents.length) items = featuredEvents;
 
   return (
-    <div className="mb-8">
+    <div className="mb-12">
+      <h3 className="mb-4 text-xl font-bold">Featured</h3>
       <Carousel
         plugins={[
           Autoplay({
@@ -34,24 +36,29 @@ export default function FeaturedEvents({ events }) {
       >
         <CarouselContent className="h-[174.78px] sm:h-[257.68px] md:h-[313.33px] lg:h-[424.64px] xl:h-[535.94px] 2xl:h-[653.91px]">
           {items.map((item) => (
-            <CarouselItem key={item.slug} className="group">
-              <Link href={`/tickets/${item.slug}`}>
-                <div className="relative h-full w-full">
+            <CarouselItem key={item.slug}>
+              <Link href={`/tickets/${item.slug}`} className="group">
+                <div className="relative h-full w-full overflow-hidden rounded-xl">
                   <Image
                     src={retrieveImageUrl("events", item.image_file)}
                     alt={`${item.artist} - ${item.title} event poster`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="rounded-md object-cover"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:duration-300 group-hover:ease-out"
                   />
-                  <div className="absolute inset-0 flex flex-col justify-end rounded-md bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-8 lg:p-12">
-                    <h3 className="font-bold text-white sm:text-lg">
+                  <div className="absolute inset-0 z-20 flex flex-col justify-end p-4 sm:p-6 md:p-8">
+                    <h3 className="mb-0.5 text-lg font-bold text-white sm:text-xl md:mb-1 md:text-2xl lg:mb-1.5 lg:text-3xl">
                       {item.artist}
                     </h3>
-                    <p className="text-sm text-white sm:text-base">
+                    <p className="line-clamp-1 text-sm text-white sm:text-base md:text-lg">
                       {item.title}
                     </p>
                   </div>
+                  <BlurEffect
+                    className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 rounded-xl sm:h-28 md:h-32 lg:h-36"
+                    intensity={500}
+                    position="bottom"
+                  />
                 </div>
               </Link>
             </CarouselItem>
