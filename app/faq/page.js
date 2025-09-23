@@ -78,7 +78,7 @@ const faqItems = [
             href="https://wa.me/601165324028"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+            className="group flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2 transition-colors hover:bg-accent"
           >
             <WhatsApp
               height={16}
@@ -94,7 +94,7 @@ const faqItems = [
             href="mailto:jfaikicks@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex w-full items-center justify-center gap-2 rounded-md border border-border py-2 transition-colors hover:bg-accent"
+            className="group flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2 transition-colors hover:bg-accent"
           >
             <Mail
               height={16}
