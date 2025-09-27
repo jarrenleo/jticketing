@@ -14,18 +14,15 @@ import TicketList from "./TicketList";
 import SeatMap from "./SeatMap";
 
 export default function Tickets({ eventData, ticketsData }) {
-  const [viewportHeight, setViewportHeight] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const { addItem, openCart } = useCart();
 
   useEffect(() => {
-    setViewportHeight(window.innerHeight);
     setViewportWidth(window.innerWidth);
   }, []);
 
   useEffect(() => {
     function handleResize() {
-      setViewportHeight(window.innerHeight);
       setViewportWidth(window.innerWidth);
     }
 
@@ -45,7 +42,7 @@ export default function Tickets({ eventData, ticketsData }) {
     openCart();
   }
 
-  if (!viewportWidth || !viewportHeight) return null;
+  if (!viewportWidth) return null;
 
   return (
     <div className="container mx-auto px-4 py-8">
