@@ -16,7 +16,6 @@ import SeatMap from "./SeatMap";
 export default function Tickets({ eventData, ticketsData }) {
   const [viewportHeight, setViewportHeight] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
-  const [ticketScrollArea, setTicketScrollArea] = useState(0);
   const { addItem, openCart } = useCart();
 
   useEffect(() => {
@@ -34,16 +33,6 @@ export default function Tickets({ eventData, ticketsData }) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    if (!viewportHeight) return;
-
-    const scrollArea = (
-      viewportHeight -
-      (421.33 + (eventData.additional_info ? 136 : 0))
-    ).toFixed(2);
-    setTicketScrollArea(scrollArea);
-  }, [viewportHeight, eventData]);
 
   function handleAddToCart(ticket) {
     const item = {
@@ -90,11 +79,7 @@ export default function Tickets({ eventData, ticketsData }) {
       ) : (
         <>
           <div className="grid grid-cols-5 gap-8">
-            <TicketList
-              tickets={ticketsData}
-              ticketScrollArea={ticketScrollArea}
-              onAddToCart={handleAddToCart}
-            />
+            <TicketList tickets={ticketsData} onAddToCart={handleAddToCart} />
             <SeatMap event={eventData} />
           </div>
         </>

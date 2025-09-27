@@ -9,12 +9,11 @@ function filterTickets(tickets, field, value) {
   return tickets.filter((ticket) => ticket[field] === value);
 }
 
-export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
+export default function TicketList({ tickets, onAddToCart }) {
   const [displayTickets, setDisplayTickets] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  // const [selectedSection, setSelectedSection] = useState("");
   const [selectedSort, setSelectedSort] = useState("");
 
   useEffect(() => {
@@ -39,13 +38,6 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
         selectedCategory,
       );
 
-    // if (selectedSection)
-    //   filteredTickets = filterTickets(
-    //     filteredTickets,
-    //     "section",
-    //     selectedSection,
-    //   );
-
     if (selectedSort)
       filteredTickets = [...filteredTickets].sort((a, b) => {
         switch (selectedSort) {
@@ -53,34 +45,21 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
             return a.price - b.price;
           case "price_desc":
             return b.price - a.price;
-          // case "row_asc":
-          //   return a.row
-          //     .toString()
-          //     .localeCompare(b.row.toString(), undefined, { numeric: true });
-          // case "row_desc":
-          //   return b.row
-          //     .toString()
-          //     .localeCompare(a.row.toString(), undefined, { numeric: true });
           default:
             return 0;
         }
       });
 
     setDisplayTickets(filteredTickets);
-  }, [
-    tickets,
-    selectedDate,
-    selectedQuantity,
-    selectedCategory,
-    // selectedSection,
-    selectedSort,
-  ]);
+  }, [tickets, selectedDate, selectedQuantity, selectedCategory, selectedSort]);
 
   return (
     <section className="col-span-3">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold">Tickets</h2>
-        <div className="flex items-center gap-2">
+        <div
+          className={`flex items-center gap-2 ${displayTickets.length > 6 && "lg:pr-[31.33px]"}`}
+        >
           <FilterSheet
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
@@ -88,8 +67,6 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
             setSelectedQuantity={setSelectedQuantity}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
-            // selectedSection={selectedSection}
-            // setSelectedSection={setSelectedSection}
             tickets={tickets}
           />
           <SortSelect
@@ -99,12 +76,9 @@ export default function TicketList({ tickets, ticketScrollArea, onAddToCart }) {
         </div>
       </div>
 
-      <div
-        className={`${ticketScrollArea && "scrollbar-hide overflow-y-auto"}`}
-        style={ticketScrollArea ? { height: `${ticketScrollArea}px` } : {}}
-      >
+      <div className="scrollbar-none lg:scrollbar lg:scrollbar-thumb-muted-foreground/25 lg:scrollbar-track-background overflow-y-auto lg:max-h-[599.96px]">
         <div
-          className={`flex flex-col gap-4 ${displayTickets.length && "sm:grid sm:flex-none sm:grid-cols-2"}`}
+          className={`flex flex-col gap-4 ${displayTickets.length > 6 && "lg:pr-4"} ${displayTickets.length && "sm:grid sm:flex-none sm:grid-cols-2"}`}
         >
           {displayTickets.length ? (
             displayTickets.map((ticket) => (
