@@ -7,7 +7,7 @@ import {
   Img,
   Text,
   Link,
-} from "@react-email/components";
+} from "react-email";
 import WhatsApp from "../icons/WhatsApp";
 import Mail from "../icons/Mail";
 import Facebook from "../icons/Facebook";
